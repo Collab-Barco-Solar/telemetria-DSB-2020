@@ -18,7 +18,6 @@ String packet ;
 
 void cbk(int packetSize) {
   packet ="";
-  packSize = String(packetSize,DEC);
   for (int i = 0; i < packetSize; i++) { packet += (char) LoRa.read(); }
   rssi = "RSSI " + String(LoRa.packetRssi(), DEC) ;
   Serial.println("Sinal " + rssi + " Mensagem: " + packet);
