@@ -11,12 +11,10 @@ Adafruit_ADS1115 ads(0x48);
 /*
  * Variaveis
  */
-float ads_bit_Voltage;
-float lm35_constant;
+double ads_bit_Voltage;
  
  
-void setup(void) 
-{
+void setup(void) {
   /* inicializa a serial */
   Serial.begin(BAUD);
  
@@ -30,7 +28,8 @@ void setup(void)
    * - - VDD+0.3v ou GND-0.3v
    */
 
-  ads.setGain(GAIN_TWO);        // 2x gain   +/- 2.048V  1 bit = 1mV      0.0625mV
+  ads.setGain(GAIN_SIXTEEN);    // 16x gain  +/- 0.256V  1 bit = 0.125mV  0.0078125mV
+ 
    
 //  ads.setGain(GAIN_TWOTHIRDS);  // 2/3x gain +/- 6.144V  1 bit = 3mV      0.1875mV (default)
 //  ads.setGain(GAIN_ONE);        // 1x gain   +/- 4.096V  1 bit = 2mV      0.125mV
@@ -43,7 +42,7 @@ void setup(void)
   ads.begin();
  
   /* modifique este valor de acordo com o ganho selecionado */
-  double ads_InputRange = 2.048;
+  double ads_InputRange = 0.256;
  
   /* no range de +-6.144V, 187.502uV/bit */
   ads_bit_Voltage = (ads_InputRange * 2) / (ADC_16BIT_MAX - 1);
@@ -59,12 +58,11 @@ void setup(void)
   Serial.println();
   
   /* imprime a primeira linha com identificacao dos dados */
-  Serial.println("ADS RAW \tADS Temp.");
+  Serial.println("ADS RAW \tADS Tensão.");
  
-  }
+}
  
-void loop(void) 
-{
+void loop(void) {
   /* variaveis apra armazenar o valor RAW do adc */
   int16_t ads_ch0 = 0;
   int16_t nano_ch0_0 = 0;           // usando referencia de Vcc (5V)
@@ -79,12 +77,24 @@ void loop(void)
    * - converter o valor RAW em tensao
    * - calcula a temperatura
    ********************************************/
-  ads_ch0 = ads.readADC_Differential_0_1();
+  //ads_ch0 = media(ads) ;
+  double ads_0_1 = media(ads) ;
+  
   ads_Voltage_ch0 = ads_ch0 * ads_bit_Voltage;
   
   /* imprime os resultados */
-  Serial.print(ads_ch0);    Serial.print("\t\t");   Serial.print(ads_Voltage_ch0, 8);    Serial.print("\t\t");   
+  Serial.print(ads_0_1);    Serial.print("\t\t");   Serial.print(ads_Voltage_ch0, 8);    Serial.print("\t\t");   
   Serial.println();
    
-  delay(200);
+  delay(20);
+}
+
+double media( Adafruit_ADS1115 adc ) {
+  double leituras = 0;
+
+  for (int i = 0 ; i < 100 ; i++ ){
+    leituras += adc.readADC_Differential_0_1();
+  }
+
+  return leituras/100;
 }
