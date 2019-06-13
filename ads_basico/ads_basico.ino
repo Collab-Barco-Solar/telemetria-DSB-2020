@@ -43,8 +43,10 @@ void loop(void)
   //Serial.print("Differential: "); 
   //Serial.print(results); 
   //Serial.print("("); 
+  Serial.print(results); 
+  Serial.print(" "); 
   Serial.println(results * multiplier); 
   //Serial.println("mV)");
 
-  delay(100);
+  delay(10);
 }
