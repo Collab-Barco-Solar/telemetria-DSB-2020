@@ -9,7 +9,7 @@
 #define RST     14    // GPIO14 -- SX1278's RESET
 #define DI0     26    // GPIO26 -- SX1278's IRQ(Interrupt Request)
 #define FREQ  915E6   // Operating LoRa frequency
-#define SF      7     // Operating LoRa Spread Factor
+#define SF      10     // Operating LoRa Spread Factor
 #define BAND  125E3   // Operating LoRa Bandwidth
 #define BAUD 2000000  // BAUD serial rate
 
@@ -23,8 +23,8 @@ void cbk(int packetSize) {
   for (int i = 0; i < packetSize; i++) { packet += (char) LoRa.read(); }
   rssi = String(LoRa.packetRssi(), DEC) ;
   
-  Serial.print("Sinal RSSI: " + rssi );
-  Serial.println(" Mensagem: " + packet);
+  Serial.print( rssi + ";" );
+  Serial.println( packet );
 }
 
 void setup() {
@@ -46,7 +46,7 @@ void setup() {
   
   //LoRa.onReceive(cbk);
   LoRa.receive();
-  Serial.println("init ok");
+  Serial.println("RSSI ; Latitude, Longitude ; Date ; Time ");
 
   delay(1000);
   

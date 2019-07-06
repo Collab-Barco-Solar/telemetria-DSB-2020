@@ -17,7 +17,7 @@
 #define GPSBaud 9600 // Neo6M Baud rate
 
 #define FREQ  915E6   // Operating LoRa frequency
-#define SF      7    // Operating LoRa Spread Factor
+#define SF      10    // Operating LoRa Spread Factor
 #define BAND  125E3   // Operating LoRa Bandwidth
 #define TXPOWER 20    // Operating LoRa Transmition Power
 #define BAUD 2000000  // BAUD serial rate
@@ -63,6 +63,11 @@ void csvSeparator(){
   LoRa.print(F(";"));
 }
 
+void GPSerrorMessage(){
+  LoRa.print(F("*"));
+  csvSeparator();
+}
+
 void loop() {
   String message = "SisTel";
   //Display counter and analog value in serial monitor
@@ -76,13 +81,13 @@ void loop() {
       if (gps.location.isValid()){
         
         LoRa.print(gps.location.lat(), 6);
-        csvSeparator();
+        LoRa.print(F(","));
         LoRa.print(gps.location.lng(), 6);
         csvSeparator();
       }
       else{
-        LoRa.print(F(" "));
-        Serial.print("No GPS signal");
+        GPSerrorMessage();
+        Serial.print("Invalid location");
       }
 
       if (gps.date.isValid()){
@@ -94,8 +99,8 @@ void loop() {
         csvSeparator();
       }
       else{
-        LoRa.print(F(" "));
-        Serial.print("No GPS signal");
+        GPSerrorMessage();
+        Serial.print("Invalid date");
       }
     
       Serial.print(F(" "));
@@ -111,13 +116,12 @@ void loop() {
         LoRa.print(F("."));
         if (gps.time.centisecond() < 10) LoRa.print(F("0"));
         LoRa.print(gps.time.centisecond());
-        csvSeparator();
         break;
       }
       else
       {
-        LoRa.print(F(" "));
-        Serial.print("No GPS signal");
+        GPSerrorMessage();
+        Serial.print("Invalid time");
       }
 
     }
