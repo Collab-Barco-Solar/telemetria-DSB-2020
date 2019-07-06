@@ -9,10 +9,11 @@
 #define SS      18    // GPIO18 -- SX1278's CS
 #define RST     14    // GPIO14 -- SX1278's RESET
 #define DI0     26    // GPIO26 -- SX1278's IRQ(Interrupt Request)
-#define ANALOG_PIN 36 // GPIO36 -- Analog input
+
 #define FREQ  915E6   // Operating LoRa frequency
-#define SF      12     // Operating LoRa Spread Factor
-#define BAND  125E3  // Operating LoRa Bandwidth
+#define SF      12    // Operating LoRa Spread Factor
+#define BAND  125E3   // Operating LoRa Bandwidth
+#define TXPOWER 20    // Operating LoRa Transmition Power
 #define BAUD 2000000  // BAUD serial rate
 
 unsigned int counter = 0;
@@ -24,7 +25,6 @@ String packet ;
  
 
 void setup() {
-  pinMode(ANALOG_PIN, INPUT);
   
   Serial.begin(BAUD);
   while (!Serial);
@@ -40,29 +40,26 @@ void setup() {
 
   LoRa.setSpreadingFactor(SF);
   LoRa.setSignalBandwidth(BAND);
+  LoRa.setTxPower(TXPOWER);
   LoRa.enableCrc();
   
   //LoRa.onReceive(cbk);
   //  LoRa.receive();
-  Serial.println("init ok");
+  Serial.println("Initialization: ok");
  
   delay(1500);
 }
 
 void loop() {
-
-  double voltage = analogRead(ANALOG_PIN); // Analog voltage measured
-
+  String message = "SisTel";
   //Display counter and analog value in serial monitor
-  Serial.print(String(counter));
-  Serial.println("  tensao> " + String(voltage)); 
+  Serial.println( String(counter) + " " + message);
   
   // Create and send packet
   LoRa.beginPacket();
+  LoRa.print(message);  
   LoRa.print(" ");
   LoRa.print(counter);
-  LoRa.print(" ; ");
-  LoRa.print(voltage);
   LoRa.endPacket();
 
   counter++;

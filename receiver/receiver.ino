@@ -14,7 +14,6 @@
 #define BAUD 2000000  // BAUD serial rate
 
 String rssi = "RSSI --";
-char sinalRSSI[5];
 String packSize = "--";
 String packet ;
 
@@ -23,14 +22,9 @@ void cbk(int packetSize) {
   packet ="";
   for (int i = 0; i < packetSize; i++) { packet += (char) LoRa.read(); }
   rssi = String(LoRa.packetRssi(), DEC) ;
-  Serial.print("Sinal RSSI: " );
-
-  rssi.toCharArray(sinalRSSI, 5);
-  sprintf( sinalRSSI , "%03d", rssi.toInt());
-  sinalRSSI[4] = '\0';
-
   
-  Serial.println( String(sinalRSSI) + " Mensagem: " + packet);
+  Serial.print("Sinal RSSI: " + rssi );
+  Serial.println(" Mensagem: " + packet);
 }
 
 void setup() {
@@ -58,9 +52,26 @@ void setup() {
   
 }
 
+int received = 0;
+int lost = 0;
+int counter = 0;
 void loop() {
   int packetSize = LoRa.parsePacket();
-  if (packetSize) { cbk(packetSize);  }
+  if (packetSize) { 
+    cbk(packetSize);
+
+    if ( packet.substring(0,6) == "SisTel" ) {
+      received ++;
+    }
+    else {
+      lost++;
+    }
+    counter++;
+
+    Serial.println( "Efficiency: " + String(received) + " / " + String(counter) + " = " + String(double(received) / double(counter)) );
+  }
+
+  
   delay(10);
   
 }
