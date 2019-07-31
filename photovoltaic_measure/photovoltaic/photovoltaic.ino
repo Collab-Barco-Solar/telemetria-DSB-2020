@@ -11,11 +11,11 @@
 #define Vin 3.3 
 
 // valor do ruido apresentado na medição da porta A0 
-//verificar na primeira medida: ajustar a tensão inicial medida para o valor Vin
-#define RUIDO 7.8 
+// verificar na primeira medida: ajustar a tensão inicial medida para o valor Vin
+// #define RUIDO 7.8 
 
 // expressao do divisor de tensao
-float Vout = Vin*(R2/(R1+R2)); 
+float FATORRESISTORES = (1/(R2/(R1+R2))); 
 
 // define a quantidade de amostras retiradas para fazer cada medida
 #define AMOSTRAS 10 
@@ -38,12 +38,13 @@ void setup() {
     Serial.println();
     if(Vin<3.3*((R1+R2)/R2)) Serial.println("Tensão está... ok!");
     else Serial.println("Tensão está... error!");
-    if(0.012>(Vout/(R1+R2))) Serial.println("Corrente está... ok!");
-    else Serial.println("Corrente está... error!");
+    
+    //if(0.012>(Vout/(R1+R2))) Serial.println("Corrente está... ok!");
+    //else Serial.println("Corrente está... error!");
 }
 
 void loop() {
-  float tensaoA0 = ((lePorta(A0)-RUIDO) * Vin * 3.3) / (1024 * Vout);
+  float tensaoA0 = ((lePorta(A0))* FATORRESISTORES);
   Serial.println(tensaoA0,8);
   delay(30000); // 60000 para medidas minuto a minuto
 }
