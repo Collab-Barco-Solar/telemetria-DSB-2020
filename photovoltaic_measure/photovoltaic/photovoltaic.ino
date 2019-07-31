@@ -1,5 +1,8 @@
 // Definições
 
+//Tensao de Circuito Voc - 48.4 V 
+
+
 // valor dos resistores utilizados no divisor de tensão
 #define R1 41000.0
 #define R2 3600.0
