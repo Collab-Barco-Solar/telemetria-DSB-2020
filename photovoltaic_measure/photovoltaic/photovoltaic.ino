@@ -14,37 +14,25 @@
 // verificar na primeira medida: ajustar a tensão inicial medida para o valor Vin
 // #define RUIDO 7.8 
 
-// expressao do divisor de tensao
-float FATORRESISTORES = (1/(R2/(R1+R2))); 
-
-// define a quantidade de amostras retiradas para fazer cada medida
-#define AMOSTRAS 10 
-
 // função para medir a media de uma porta com valor analógico
-float lePorta(uint8_t portaAnalogica) 
+float lePorta(uint8_t portaAnalogica, float fatorDeConversao, int amostras, int delayAmostral) 
 {
   float total=0;  
-  for (int i=1; i<=AMOSTRAS; i++) 
+  for (int i=1; i<=amostras; i++) 
   {
     total += 1.0 * analogRead(portaAnalogica);
-    delay(5);
+    delay(delayAmostral);
   }
-  return total / (float)AMOSTRAS;
+  return fatorDeCoversao*(total / (float) amostras);
 }
 
 void setup() {
-    Serial.begin(9600);
-    
-    Serial.println();
-    if(Vin<3.3*((R1+R2)/R2)) Serial.println("Tensão está... ok!");
-    else Serial.println("Tensão está... error!");
-    
-    //if(0.012>(Vout/(R1+R2))) Serial.println("Corrente está... ok!");
-    //else Serial.println("Corrente está... error!");
+    Serial.begin(2000000);
+    Serial.println("Start");
 }
 
 void loop() {
-  float tensaoA0 = ((lePorta(A0))* FATORRESISTORES);
-  Serial.println(tensaoA0,8);
-  delay(30000); // 60000 para medidas minuto a minuto
+  float tensaoA0 = ((lePorta(A0, R2/(R1+R2), ))* FATORRESISTORES);
+  Serial.println(tensaoA0);
+  delay(500); // 60000 para medidas minuto a minuto
 }

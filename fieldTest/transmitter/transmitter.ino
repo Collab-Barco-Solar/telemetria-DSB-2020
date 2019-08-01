@@ -17,7 +17,7 @@
 #define GPSBaud 9600 // Neo6M Baud rate
 
 #define FREQ  915E6   // Operating LoRa frequency
-#define SF      10    // Operating LoRa Spread Factor
+#define SF      7    // Operating LoRa Spread Factor
 #define BAND  125E3   // Operating LoRa Bandwidth
 #define TXPOWER 20    // Operating LoRa Transmition Power
 #define BAUD 2000000  // BAUD serial rate

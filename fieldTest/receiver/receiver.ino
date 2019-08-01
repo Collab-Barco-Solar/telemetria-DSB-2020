@@ -9,7 +9,7 @@
 #define RST     14    // GPIO14 -- SX1278's RESET
 #define DI0     26    // GPIO26 -- SX1278's IRQ(Interrupt Request)
 #define FREQ  915E6   // Operating LoRa frequency
-#define SF      10     // Operating LoRa Spread Factor
+#define SF      12     // Operating LoRa Spread Factor
 #define BAND  125E3   // Operating LoRa Bandwidth
 #define BAUD 2000000  // BAUD serial rate
 
