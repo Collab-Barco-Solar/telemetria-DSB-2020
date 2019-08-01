@@ -22,7 +22,7 @@ void setup(void)
   // ads.setGain(GAIN_EIGHT);      // 8x gain   +/- 0.512V  1 bit =   0.015625mV
   // ads.setGain(GAIN_SIXTEEN);    // 16x gain  +/- 0.256V  1 bit =   0.0078125mV
 
-  ads.setGain(GAIN_SIXTEEN);    // 16x gain  +/- 0.256V  1 bit =   0.0078125mV
+  ads.setGain(GAIN_TWOTHIRDS);  // 2/3x gain +/- 6.144V  1 bit =   0.1875mV (default)
   
   ads.begin();
 
@@ -35,7 +35,7 @@ void loop(void)
   int16_t results;
   
   /* Be sure to update this value based on the IC and the gain settings! */
-  float   multiplier = 0.0078125F;  
+  float   multiplier = 0.1875F;  
   //float multiplier = 0.1875F; /* ADS1115  @ +/- 6.144V gain (16-bit results) */
 
   results = ads.readADC_Differential_0_1();  
