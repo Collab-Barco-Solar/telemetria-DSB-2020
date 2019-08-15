@@ -2,8 +2,11 @@
 #include <Adafruit_ADS1015.h>
 
 #define   BAUD 2000000
+#define RESISTOR_CONSTANT (98400 + 3828) / 3828
 
-Adafruit_ADS1115 ads;  /* Use this for the 16-bit version */
+Adafruit_ADS1115 ads(0x48);  /* Use this for the 16-bit version */
+
+int16_t results;
 
 void setup(void)
 {
@@ -22,20 +25,20 @@ void setup(void)
   // ads.setGain(GAIN_EIGHT);      // 8x gain   +/- 0.512V  1 bit =   0.015625mV
   // ads.setGain(GAIN_SIXTEEN);    // 16x gain  +/- 0.256V  1 bit =   0.0078125mV
 
-  ads.setGain(GAIN_TWOTHIRDS);  // 2/3x gain +/- 6.144V  1 bit =   0.1875mV (default)
+  ads.setGain(GAIN_ONE);        // 1x gain   +/- 4.096V  1 bit =   0.125mV
   
   ads.begin();
 
-  Serial.println(38);
-  Serial.println(40);
+  Serial.println("Taxa de amostragem: 1s, tensão em mV");
+  
 }
 
 void loop(void)
 {
-  int16_t results;
+  
   
   /* Be sure to update this value based on the IC and the gain settings! */
-  float   multiplier = 0.1875F;  
+  float   multiplier = 0.125F;  
   //float multiplier = 0.1875F; /* ADS1115  @ +/- 6.144V gain (16-bit results) */
 
   results = ads.readADC_Differential_0_1();  
@@ -43,10 +46,10 @@ void loop(void)
   //Serial.print("Differential: "); 
   //Serial.print(results); 
   //Serial.print("("); 
-  Serial.print(results); 
-  Serial.print(" "); 
-  Serial.println(results * multiplier); 
+  //Serial.print(results); 
+  //Serial.print(" "); 
+  Serial.println(results * multiplier * RESISTOR_CONSTANT, 10); 
   //Serial.println("mV)");
 
-  delay(10);
+  delay(1000);
 }
