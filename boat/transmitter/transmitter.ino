@@ -68,8 +68,24 @@ String LongitudeGPS( TinyGPSPlus gps ){
 }
 
 char CSV_Separator(){
-  return (";");
+  return (';');
 }
+
+int16_t ShuntRead(){
+
+  return 0;
+}
+
+int16_t BatteryRead(){
+
+  return 0;
+}
+
+int16_t ModulesRead(){
+
+  return 0;
+}
+
 
 void setup() {
   
@@ -103,18 +119,25 @@ void setup() {
 void loop() {
   
   // Create and send packet
+
+  // Add Update GPS
+
+  
   LoRa.beginPacket();
   // Escrever localizacao
   LoRa.print(LatitudeGPS(gps));
   LoRa.print(CSV_Separator());
   LoRa.print(LongitudeGPS(gps));
   LoRa.print(CSV_Separator());
+  LoRa.print(ShuntRead());
+  LoRa.print(BatteryRead());
+  LoRa.print(ModulesRead());
+  
   // Escrever o valor no shunt 
 
   
   //LoRa.print(counter);
   LoRa.endPacket();
 
-  counter++;
   //delay(50);
 }

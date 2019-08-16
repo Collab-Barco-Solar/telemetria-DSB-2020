@@ -14,7 +14,7 @@ HardwareSerial ss(2);
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(2000000);
   ss.begin(GPSBaud, SERIAL_8N1, TXPin, RXPin);
 
   Serial.println(F("DeviceExample.ino"));
