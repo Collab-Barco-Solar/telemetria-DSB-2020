@@ -5447,7 +5447,7 @@ http://embedded-lab.com/blog/a-brief-overview-of-allegro-acs712-current-sensor-p
 <part name="HC4067" library="diy-modules" deviceset="SPARKFUN-AD-MUX-16X1" device=""/>
 <part name="BB_BE_C" library="diy-modules" deviceset="CURRENT-SENSOR-ACS712" device=""/>
 <part name="C_BAUX" library="diy-modules" deviceset="CURRENT-SENSOR-ACS712" device=""/>
-<part name="SHUNTS" library="con-amp-quick" library_urn="urn:adsk.eagle:library:125" deviceset="M02" device="" package3d_urn="urn:adsk.eagle:package:5956/1"/>
+<part name="BORNE_SHUNTS" library="con-amp-quick" library_urn="urn:adsk.eagle:library:125" deviceset="M02" device="" package3d_urn="urn:adsk.eagle:package:5956/1"/>
 </parts>
 <sheets>
 <sheet>
@@ -5620,7 +5620,7 @@ http://embedded-lab.com/blog/a-brief-overview-of-allegro-acs712-current-sensor-p
 <attribute name="NAME" x="-88.9" y="162.56" size="1.778" layer="95"/>
 <attribute name="VALUE" x="-88.9" y="160.02" size="1.778" layer="96"/>
 </instance>
-<instance part="SHUNTS" gate="G$1" x="-86.36" y="169.164" smashed="yes">
+<instance part="BORNE_SHUNTS" gate="G$1" x="-86.36" y="169.164" smashed="yes">
 <attribute name="VALUE" x="-88.9" y="164.084" size="1.778" layer="96"/>
 <attribute name="NAME" x="-88.9" y="175.006" size="1.778" layer="95"/>
 </instance>
@@ -5854,7 +5854,7 @@ http://embedded-lab.com/blog/a-brief-overview-of-allegro-acs712-current-sensor-p
 <label x="27.94" y="157.48" size="1.778" layer="95" align="bottom-right"/>
 </segment>
 <segment>
-<pinref part="SHUNTS" gate="G$1" pin="1"/>
+<pinref part="BORNE_SHUNTS" gate="G$1" pin="1"/>
 <wire x1="-78.74" y1="169.164" x2="-66.04" y2="169.164" width="0.1524" layer="91"/>
 <label x="-68.58" y="169.164" size="1.778" layer="95" align="bottom-right"/>
 </segment>
@@ -5901,7 +5901,7 @@ http://embedded-lab.com/blog/a-brief-overview-of-allegro-acs712-current-sensor-p
 <label x="27.94" y="154.94" size="1.778" layer="95" align="bottom-right"/>
 </segment>
 <segment>
-<pinref part="SHUNTS" gate="G$1" pin="2"/>
+<pinref part="BORNE_SHUNTS" gate="G$1" pin="2"/>
 <wire x1="-78.74" y1="171.704" x2="-66.04" y2="171.704" width="0.1524" layer="91"/>
 <label x="-68.58" y="171.704" size="1.778" layer="95" align="bottom-right"/>
 </segment>
