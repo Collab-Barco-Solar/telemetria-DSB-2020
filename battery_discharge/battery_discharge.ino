@@ -2,7 +2,7 @@
 #include <Adafruit_ADS1015.h>
 
 #define   BAUD 2000000
-#define RESISTOR_CONSTANT (100000 + 3900) / 3900
+#define RESISTOR_CONSTANT (98500 + 3831) / 3831
 
 Adafruit_ADS1115 ads(0x48);  /* Use this for the 16-bit version */
 
