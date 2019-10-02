@@ -9,7 +9,7 @@
 #define RST     14    // GPIO14 -- SX1278's RESET
 #define DI0     26    // GPIO26 -- SX1278's IRQ(Interrupt Request)
 #define FREQ  915E6   // Operating LoRa frequency
-#define SF      12     // Operating LoRa Spread Factor
+#define SF      7     // Operating LoRa Spread Factor
 #define BAND  125E3   // Operating LoRa Bandwidth
 #define BAUD 2000000  // BAUD serial rate
 
@@ -52,26 +52,16 @@ void setup() {
   
 }
 
-int received = 0;
-int lost = 0;
-int counter = 0;
 void loop() {
+  
   int packetSize = LoRa.parsePacket();
+  
   if (packetSize) { 
     cbk(packetSize);
-
-    if ( packet.substring(0,6) == "SisTel" ) {
-      received ++;
-    }
-    else {
-      lost++;
-    }
-    counter++;
-
-    Serial.println( "Efficiency: " + String(received) + " / " + String(counter) + " = " + String(double(received) / double(counter)) );
+    
+    Serial.println(  );
   }
 
-  
   delay(10);
   
 }
