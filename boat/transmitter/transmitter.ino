@@ -50,10 +50,11 @@
 #define BATTERY  0x4A // Address of the ADC on the battery
 
 //Conversion Ratios (Voltage Divider)
-final float DT1_RATIO = 19.333333333f;
-final float DT2_RATIO = 4.970588235f;
-final float DT3_RATIO = 28.5f;
-final float DT4_RATIO = 1.564102564f;
+
+float DT1_RATIO = 19.333333333f;
+float DT2_RATIO = 4.970588235f;
+float DT3_RATIO = 28.5f;
+float DT4_RATIO = 1.564102564f;
 
 //objetos
 
@@ -78,7 +79,7 @@ int MUX_CH[11][4] = {(0,0,0,0), //Channel 0
                      (0,1,1,0), //Channel 6
                      (1,1,1,0), //Channel 7
                      (0,0,0,1), //Channel 8
-                     (1,0,0,1}, //Channel 9
+                     (1,0,0,1), //Channel 9
                      (0,1,0,1)};//Channel 10
 
 
@@ -93,9 +94,6 @@ int MUX_CH[11][4] = {(0,0,0,0), //Channel 0
   // ads.setGain(GAIN_FOUR);       // 4x gain   +/- 1.024V  1 bit =   0.03125mV
   // ads.setGain(GAIN_EIGHT);      // 8x gain   +/- 0.512V  1 bit =   0.015625mV
   // ads.setGain(GAIN_SIXTEEN);    // 16x gain  +/- 0.256V  1 bit =   0.0078125mV
-
-
-//setup
 
 //functions
 
@@ -139,16 +137,17 @@ int16_t ModulesRead(){
 }
 
 float PotentiometerRead(){
-  float readVoltage = (analogRead(PIN_POTENCIOMETER) * 3.3f) / 1024f;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
+  float readVoltage = (analogRead(PIN_POTENCIOMETER) * 3.3) / 1024;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT4_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 
 float DmsRead(){
   SetMuxChannel(MUX_CH[0]);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3f) / 1024f;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
+  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 1024;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT4_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
+}
 
 boolean ButtonReverseRead(){
   SetMuxChannel(MUX_CH[1]);
@@ -170,14 +169,14 @@ boolean ButtonCruiseRead(){
 
 float CoolerLeftRead(){
   SetMuxChannel(MUX_CH[4]);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3f) / 1024f;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
+  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 1024;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT2_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 
 float CoolerRightRead(){
   SetMuxChannel(MUX_CH[5]);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3f) / 1024f;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
+  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 1024;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT2_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
@@ -195,6 +194,7 @@ boolean RightPumpRead(){
 }
 
 
+//setup
 
 void setup() {
   
