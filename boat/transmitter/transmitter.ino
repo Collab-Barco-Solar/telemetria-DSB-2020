@@ -25,8 +25,8 @@
 #define S1 35
 #define S2 34
 #define S3 0
-#define MUX_EN 4 //MUX pin to turn on and off
-#define MUX_SIG 23 //MUX input Pin
+#define MUX_EN 23 //MUX pin to turn on and off
+#define MUX_SIG 4 //MUX input Pin
 
 //#define PIN_ACS 33  //??
 #define PIN_BAT_AUX 13
@@ -39,15 +39,15 @@
 //defines
 
 #define FREQ  915E6   // Operating LoRa frequency
-#define SF      7    // Operating LoRa Spread Factor
+#define SF      7     // Operating LoRa Spread Factor
 #define BAND  125E3   // Operating LoRa Bandwidth
 #define TXPOWER 20    // Operating LoRa Transmition Power
 #define BAUD 2000000  // BAUD serial rate
 
 
 #define SHUNT    0x48  // Address of the ADC measuring the motor current
-#define MODULES  0x49 // Address of the ADC on the solar panel modules
-#define BATTERY  0x4A // Address of the ADC on the battery
+#define MODULES  0x49  // Address of the ADC on the solar panel modules
+#define BATTERY  0x4A  // Address of the ADC on the battery
 
 //Conversion Ratios (Voltage Divider)
 
@@ -208,6 +208,7 @@ void setup() {
   pinMode(S2, OUTPUT);
   pinMode(S3, OUTPUT);
   pinMode(MUX_SIG, INPUT);
+  
   
   while (!Serial);
   Serial.println();
