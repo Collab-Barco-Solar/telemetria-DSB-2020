@@ -25,7 +25,7 @@
 #define S1 35
 #define S2 34
 #define S3 0
-#define MUX_EN 23 //MUX pin to turn on and off
+#define MUX_EN 33 //MUX pin to turn on and off
 #define MUX_SIG 4 //MUX input Pin
 
 //#define PIN_ACS 33  //??
@@ -207,6 +207,8 @@ void setup() {
   pinMode(S1, OUTPUT);
   pinMode(S2, OUTPUT);
   pinMode(S3, OUTPUT);
+  pinMode(MUX_EN, OUTPUT);
+  digitalWrite(MUX_EN,LOW);
   pinMode(MUX_SIG, INPUT);
   
   
@@ -288,9 +290,6 @@ void loop() {
   // Write right pump state
   LoRa.print(RightPumpRead());
   LoRa.print(CSV_Separator());
-  
-  
-
   
   //LoRa.print(counter);
   LoRa.endPacket();
