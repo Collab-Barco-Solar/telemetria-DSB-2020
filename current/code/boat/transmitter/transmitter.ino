@@ -21,12 +21,32 @@
 #define TXPin    12  // Neo6M TX pin
 #define GPSBaud 9600 // Neo6M Baud rate
 
+
+//MUX control pins
+
 #define S0 32 //MUX control pins
-#define S1 35
-#define S2 34
+#define S1 13
+#define S2 14
 #define S3 0
 #define MUX_EN 33 //MUX pin to turn on and off
 #define MUX_SIG 4 //MUX input Pin
+
+// MUX input pins
+
+ int DMSMux = 0;
+ int ReverseMux = 1;
+ int OnOffMux = 2;
+ int CruiseMux = 3;
+ int PotMux = 4;
+ int CBMux = 5;
+ int BBMux = 6;
+ int BEMux = 7;
+ int CEMux = 8;
+ int ACS1Mux = 9;
+ int BatAMux = 10;
+ int PhotoMux = 11;
+ int BatBankMux = 12;
+ int ACS2Mux = 13;
 
 //#define PIN_ACS 33  //??
 //#define PIN_BAT_AUX 13
@@ -68,25 +88,6 @@ HardwareSerial ss(2); // Hardware Serial comunication object
 Adafruit_ADS1115 ads_motor(MOTOR);
 Adafruit_ADS1115 ads_battery(BATTERY);
 
-//MUX Selecting Channels
-int MUX_CH[16][4] = {(0,0,0,0), //Channel 0
-                     (1,0,0,0), //Channel 1
-                     (0,1,0,0), //Channel 2
-                     (1,1,0,0), //Channel 3
-                     (0,0,1,0), //Channel 4
-                     (1,0,1,0), //Channel 5
-                     (0,1,1,0), //Channel 6
-                     (1,1,1,0), //Channel 7
-                     (0,0,0,1), //Channel 8
-                     (1,0,0,1), //Channel 9
-                     (0,1,0,1), //Channel 10
-                     (1,1,0,1), //Channel 11
-                     (0,0,1,1), //Channel 12
-                     (1,0,1,1), //Channel 13
-                     (0,1,1,1), //Channel 14
-                     (1,1,1,1)}; //Channel 15
-
-
   //   Cheatsheet                                                     ADS1115
   //                                                                  -------
   // ads.setGain(GAIN_TWOTHIRDS);  // 2/3x gain +/- 6.144V  1 bit =   0.1875mV (default)
@@ -98,11 +99,14 @@ int MUX_CH[16][4] = {(0,0,0,0), //Channel 0
 
 //functions
 
-void SetMuxChannel(int ChannelOrder[]){
-  digitalWrite(S0, ChannelOrder[0]);
-  digitalWrite(S1, ChannelOrder[1]);
-  digitalWrite(S2, ChannelOrder[2]);
-  digitalWrite(S3, ChannelOrder[3]);
+
+void SetMuxChannel ( int channel ) {
+  
+  digitalWrite(S0, channel>>0&1);
+  digitalWrite(S1, channel>>1&1);
+  digitalWrite(S2, channel>>2&1);
+  digitalWrite(S3, channel>>3&1); 
+  
 }
 
 double LatitudeGPS( ){
@@ -132,83 +136,82 @@ float BatteryCurrentRead(){
 }
 
 float PotentiometerRead(){
-  SetMuxChannel(MUX_CH[4]);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 1024;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
+  SetMuxChannel(PotMux);
+  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4096;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT4_RATIO * 2; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 
 boolean DmsRead(){
-  SetMuxChannel(MUX_CH[0]); 
+  SetMuxChannel(DMSMux);; 
   return (analogRead(MUX_SIG) < 300); //If it's less than 300 bits, then consider the button as closed and dms on
 }
 
 boolean ButtonReverseRead(){
-  SetMuxChannel(MUX_CH[1]);
+  SetMuxChannel(ReverseMux);
   
   return (analogRead(MUX_SIG) < 300); //If it's less than 300 bits, then consider the button as closed
 }
 
 boolean ButtonMotorRead(){
-  SetMuxChannel(MUX_CH[2]);
+  SetMuxChannel(OnOffMux);
   
   return (analogRead(MUX_SIG) < 300); //If it's less than 300 bits, then consider the button as closed
 }
 
 boolean ButtonCruiseRead(){
-  SetMuxChannel(MUX_CH[3]);
-  
+  SetMuxChannel(CruiseMux);
   return (analogRead(MUX_SIG) < 300); //If it's less than 300 bits, then consider the button as closed
 }
 
 float CoolerLeftRead(){
-  SetMuxChannel(MUX_CH[5]);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 1024;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
+  SetMuxChannel(CBMux);
+  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4096;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT2_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 
 float CoolerRightRead(){
-  SetMuxChannel(MUX_CH[8]);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 1024;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
+  SetMuxChannel(CEMux);
+  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4096;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT2_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 float AuxiliaryBatteryRead(){
-  SetMuxChannel(MUX_CH[10]);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 1024;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
+  SetMuxChannel(BatAMux);
+  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4096;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT2_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 float AuxiliaryBatteryCurrentRead(){
-  SetMuxChannel(MUX_CH[9]);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 1024;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
+  SetMuxChannel(ACS1Mux);
+  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4096;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT4_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 
 float PhotovoltaicModulesRead(){
-  SetMuxChannel(MUX_CH[11]);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 1024;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
+  SetMuxChannel(PhotoMux);
+  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4096;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT3_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 
 float BatteryBankRead(){
-  SetMuxChannel(MUX_CH[12]);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 1024;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
+  SetMuxChannel(BatBankMux);
+  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4096;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT1_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 
 boolean LeftPumpRead(){
-  SetMuxChannel(MUX_CH[6]);
+  SetMuxChannel(BBMux);
   
   return (analogRead(MUX_SIG) < 300); //If it's less than 300 bits, then consider the button as closed
 }
 
 boolean RightPumpRead(){
-  SetMuxChannel(MUX_CH[7]);
+  SetMuxChannel(BEMux);
     
   return (analogRead(MUX_SIG) < 300); //If it's less than 300 bits, then consider the button as closed
 }
@@ -263,93 +266,93 @@ void setup() {
 
 void loop() {
   
-  // Create and send packet
+// Create and send packet
 
-  // Update GPS
-//  gps.encode(ss.read());
-//  
-//  LoRa.beginPacket();
-//  // Write GPS Latitude
-//  LoRa.print("GPS.LAT: "); 
-//  LoRa.print(LatitudeGPS());
-//  LoRa.print(CSV_Separator());
-//  // Write GPS Longitude
-//  LoRa.print("GPS.LONG: "); 
-//  LoRa.print(LongitudeGPS());
-//  LoRa.print(CSV_Separator());
+// Update GPS
+ gps.encode(ss.read());
+ 
+ LoRa.beginPacket();
+ // Write GPS Latitude
+ LoRa.print("GPS.LAT: "); 
+ LoRa.print(LatitudeGPS());
+ LoRa.print(CSV_Separator());
+ // Write GPS Longitude
+ LoRa.print("GPS.LONG: "); 
+ LoRa.print(LongitudeGPS());
+ LoRa.print(CSV_Separator());
 
   //MUX readings
   
-  // Write DMS reading
-//  LoRa.print("DMS READ: ");
-//  LoRa.print(DmsRead());
-//  LoRa.print(CSV_Separator());
-//  //Write reverse button (ré)
-//  LoRa.print("REVERSE: ");
-//  LoRa.print(ButtonReverseRead()); //For all the buttons -> "true" means closed and "false" means open
-//  LoRa.print(CSV_Separator());
-//  //Write motor button state (on/off)
-//  LoRa.print("MOTOR: ");
-//  LoRa.print(ButtonMotorRead()); //For all the buttons -> "true" means closed and "false" means open
-//  LoRa.print(CSV_Separator());
-//  //Write cruise button state
-//  LoRa.print("Cruise: ");
-//  LoRa.print(ButtonCruiseRead()); //For all the buttons -> "true" means closed and "false" means open
-//  LoRa.print(CSV_Separator());
-//  // Write Current input in the batteryes voltage  (using the ADS1115)
-//  LoRa.print("Bat. Current: ");
-//  LoRa.print(BatteryCurrentRead());
-//  LoRa.print(CSV_Separator());
+ //Write DMS reading
+ LoRa.print("DMS: ");
+ LoRa.print(DmsRead());
+ LoRa.print(CSV_Separator());
+ //Write reverse button (ré)
+ LoRa.print("REV: ");
+ LoRa.print(ButtonReverseRead()); //For all the buttons -> "true" means closed and "false" means open
+ LoRa.print(CSV_Separator());
+ //Write motor button state (on/off)
+ LoRa.print("MOTOR: ");
+ LoRa.print(ButtonMotorRead()); //For all the buttons -> "true" means closed and "false" means open
+ LoRa.print(CSV_Separator());
+ //Write cruise button state
+ LoRa.print("Crui: ");
+ LoRa.print(ButtonCruiseRead()); //For all the buttons -> "true" means closed and "false" means open
+ LoRa.print(CSV_Separator());
+ // Write Current input in the batteryes voltage  (using the ADS1115)
+ LoRa.print("Bat.C: ");
+ LoRa.print(BatteryCurrentRead());
+ LoRa.print(CSV_Separator());
   // Write the potentiometer state that controls the motor 
-  LoRa.print("Potentiometer: ");
-  Serial.print("Potentiometer: ");
+  LoRa.print("Pot: ");
+  Serial.print("Pot: ");
   Serial.println(PotentiometerRead());
   LoRa.print(PotentiometerRead());
   LoRa.print(CSV_Separator());
-//  // Write Solar Modules voltage
-//  LoRa.print("Modules: ");  
-//  LoRa.print(PhotovoltaicModulesRead());
-//  LoRa.print(CSV_Separator());
-//  // Write Auxiliary Battery voltage 
-//  LoRa.print("Bat. Aux: ");   
-//  LoRa.print(AuxiliaryBatteryRead());
-//  LoRa.print(CSV_Separator());
-//  // Write Auxiliary Battery current (using acs712) 
-//  LoRa.print("Bat.A.C.: "); 
-//  LoRa.print(AuxiliaryBatteryCurrentRead());
-//  LoRa.print(CSV_Separator());
-//  // Write Battery Bank voltage 
-//  LoRa.print("Bat.Bank.: ");  
-//  LoRa.print(BatteryBankRead());
-//  LoRa.print(CSV_Separator());
-//  //Write left cooler tension
-//  LoRa.print("Cooler.B: ");  
-//  LoRa.print(CoolerLeftRead());
-//  LoRa.print(CSV_Separator());
-//  //Write right cooler tension
-//  LoRa.print("Cooler.E: ");  
-//  LoRa.print(CoolerRightRead());
-//  LoRa.print(CSV_Separator());
-//  // Write left pump state
-//  LoRa.print("Pump.B: ");  
-//  LoRa.print(LeftPumpRead());
-//  LoRa.print(CSV_Separator());
-//  // Write right pump state
-//  LoRa.print("Pump.E: ");  
-//  LoRa.print(RightPumpRead());
-//  LoRa.print(CSV_Separator());
-//
-//  // Write Motor Current reading (motor current)
-//  LoRa.print("Motor C.: ");
-//  LoRa.print(MotorCurrentRead());
-//  LoRa.print(CSV_Separator());
-//  // Write Battery CurrentIn (probably using the ADS1115)
-//  LoRa.print("Bat.C.In: ");
-//  LoRa.print(BatteryCurrentRead());
-//  LoRa.print(CSV_Separator());
-  
-  //LoRa.print(counter);
- // LoRa.endPacket();
+ // Write Solar Modules voltage
+ LoRa.print("Mod: ");  
+ LoRa.print(PhotovoltaicModulesRead());
+ LoRa.print(CSV_Separator());
+ // Write Auxiliary Battery voltage 
+ LoRa.print("Bat.A: ");   
+ LoRa.print(AuxiliaryBatteryRead());
+ LoRa.print(CSV_Separator());
+ // Write Auxiliary Battery current (using acs712) 
+ LoRa.print("Bat.A.C.: "); 
+ LoRa.print(AuxiliaryBatteryCurrentRead());
+ LoRa.print(CSV_Separator());
+ // Write Battery Bank voltage 
+ LoRa.print("Bat.B.: ");  
+ LoRa.print(BatteryBankRead());
+ LoRa.print(CSV_Separator());
+ //Write left cooler tension
+ LoRa.print("CB: ");  
+ LoRa.print(CoolerLeftRead());
+ LoRa.print(CSV_Separator());
+ //Write right cooler tension
+ LoRa.print("CE: ");  
+ LoRa.print(CoolerRightRead());
+ LoRa.print(CSV_Separator());
+ // Write left pump state
+ LoRa.print("PB: ");  
+ LoRa.print(LeftPumpRead());
+ LoRa.print(CSV_Separator());
+ // Write right pump state
+ LoRa.print("PE: ");  
+ LoRa.print(RightPumpRead());
+ LoRa.print(CSV_Separator());
 
-//  delay(50);
+ // Write Motor Current reading (motor current)
+ LoRa.print("MC: ");
+ LoRa.print(MotorCurrentRead());
+ LoRa.print(CSV_Separator());
+ // Write Battery CurrentIn (probably using the ADS1115)
+ LoRa.print("Bat.BC: ");
+ LoRa.print(BatteryCurrentRead());
+ LoRa.print(CSV_Separator());
+  
+//LoRa.print(counter);
+LoRa.endPacket();
+
+delay(10);
 }

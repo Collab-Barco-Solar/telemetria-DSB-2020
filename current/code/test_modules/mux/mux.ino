@@ -10,8 +10,7 @@
 #define MUX_SIG 4 //MUX input Pin
 
 void changeMUX ( int channel ) {
-
-  delay(15);
+  
   digitalWrite(S0, channel>>0&1);
   digitalWrite(S1, channel>>1&1);
   digitalWrite(S2, channel>>2&1);
