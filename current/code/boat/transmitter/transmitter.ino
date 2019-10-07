@@ -71,10 +71,11 @@
 
 //Conversion Ratios (Voltage Divider)
 
-float DT1_RATIO = 19.333333333f;
-float DT2_RATIO = 4.970588235f;
-float DT3_RATIO = 28.5f;
-float DT4_RATIO = 1.564102564f;
+float DT1_RATIO = 19.333333333f; // atualizar com valores medidos dos resistores
+float DT2_RATIO = 4.970588235f; // atualizar com valores medidos dos resistores
+float DT3_RATIO = 28.5f; // atualizar com valores medidos dos resistores
+float DT4_RATIO = 1.564102564f; // atualizar com valores medidos de resistores
+float DT5_RATIO = 1.552971576f;
 
 //objetos
 
@@ -139,7 +140,7 @@ float PotentiometerRead(){
   SetMuxChannel(PotMux);
   float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4096;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
   
-  return readVoltage * DT4_RATIO * 2; //Multiply by the ratio of the voltage divider to find the true voltage value
+  return readVoltage * DT5_RATIO * 2; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 
 boolean DmsRead(){
@@ -303,12 +304,12 @@ void loop() {
  LoRa.print("Bat.C: ");
  LoRa.print(BatteryCurrentRead());
  LoRa.print(CSV_Separator());
-  // Write the potentiometer state that controls the motor 
-  LoRa.print("Pot: ");
-  Serial.print("Pot: ");
-  Serial.println(PotentiometerRead());
-  LoRa.print(PotentiometerRead());
-  LoRa.print(CSV_Separator());
+// Write the potentiometer state that controls the motor 
+LoRa.print("Pot: ");
+Serial.print("Pot: ");
+Serial.println(PotentiometerRead());
+LoRa.print(PotentiometerRead());
+LoRa.print(CSV_Separator());
  // Write Solar Modules voltage
  LoRa.print("Mod: ");  
  LoRa.print(PhotovoltaicModulesRead());
