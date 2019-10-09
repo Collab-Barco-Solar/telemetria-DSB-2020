@@ -145,24 +145,24 @@ float PotentiometerRead(){
 
 boolean DmsRead(){
   SetMuxChannel(DMSMux);; 
-  return (analogRead(MUX_SIG) < 300); //If it's less than 300 bits, then consider the button as closed and dms on
+  return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed and dms on
 }
 
 boolean ButtonReverseRead(){
   SetMuxChannel(ReverseMux);
   
-  return (analogRead(MUX_SIG) < 300); //If it's less than 300 bits, then consider the button as closed
+  return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
 }
 
 boolean ButtonMotorRead(){
   SetMuxChannel(OnOffMux);
   
-  return (analogRead(MUX_SIG) < 300); //If it's less than 300 bits, then consider the button as closed
+  return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
 }
 
 boolean ButtonCruiseRead(){
   SetMuxChannel(CruiseMux);
-  return (analogRead(MUX_SIG) < 300); //If it's less than 300 bits, then consider the button as closed
+  return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
 }
 
 float CoolerLeftRead(){
@@ -208,13 +208,13 @@ float BatteryBankRead(){
 boolean LeftPumpRead(){
   SetMuxChannel(BBMux);
   
-  return (analogRead(MUX_SIG) < 300); //If it's less than 300 bits, then consider the button as closed
+  return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
 }
 
 boolean RightPumpRead(){
   SetMuxChannel(BEMux);
     
-  return (analogRead(MUX_SIG) < 300); //If it's less than 300 bits, then consider the button as closed
+  return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
 }
 
 
@@ -284,6 +284,8 @@ void loop() {
   
  //Write DMS reading
  LoRa.print("DMS: ");
+ Serial.print("DMS: ");
+ Serial.println(DmsRead());
  LoRa.print(DmsRead());
  LoRa.print(CSV_Separator());
  //Write reverse button (ré)
