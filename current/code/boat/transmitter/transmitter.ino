@@ -25,10 +25,10 @@
 //MUX control pins
 
 #define S0 32 //MUX control pins
-#define S1 13
-#define S2 14
+#define S1 14
+#define S2 13
 #define S3 0
-#define MUX_EN 33 //MUX pin to turn on and off
+// MUX ENABLE  -> CONNECTED TO DE GROUND
 #define MUX_SIG 4 //MUX input Pin
 
 // MUX input pins
@@ -75,7 +75,7 @@ float DT1_RATIO = 19.333333333f; // atualizar com valores medidos dos resistores
 float DT2_RATIO = 4.970588235f; // atualizar com valores medidos dos resistores
 float DT3_RATIO = 28.5f; // atualizar com valores medidos dos resistores
 float DT4_RATIO = 1.564102564f; // atualizar com valores medidos de resistores
-float DT5_RATIO = 1.552971576f;
+float DT5_RATIO = 1.552971576f; // VOLTAGE DIVIDER FOR POTENTIOMETER
 
 //objetos
 
@@ -231,14 +231,12 @@ void setup() {
   pinMode(S1, OUTPUT);
   pinMode(S2, OUTPUT);
   pinMode(S3, OUTPUT);
-  pinMode(MUX_EN, OUTPUT);
   pinMode(MUX_SIG, INPUT);
 
   digitalWrite(S0, LOW);
   digitalWrite(S1, LOW);
   digitalWrite(S2, LOW);
   digitalWrite(S3, LOW);
-  digitalWrite(MUX_EN,LOW);
   
   while (!Serial);
   Serial.println();
