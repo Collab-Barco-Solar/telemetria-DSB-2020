@@ -104,13 +104,13 @@ Adafruit_ADS1115 ads_battery(BATTERY);
 void SetMuxChannel ( int channel ) {
   
   digitalWrite(S0, channel>>0&1);
-  delay(2.5);
+  delay(25);
   digitalWrite(S1, channel>>1&1);
-  delay(2.5);
+  delay(25);
   digitalWrite(S2, channel>>2&1);
-  delay(2.5);
+  delay(25);
   digitalWrite(S3, channel>>3&1); 
-  delay(2.5);
+  delay(25);
 }
 
 double LatitudeGPS( ){
@@ -141,8 +141,19 @@ float BatteryCurrentRead(){
 
 float PotentiometerRead(){
   SetMuxChannel(PotMux);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4095;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
-  
+  int i=0;
+  float readVoltage;
+  while(i<10){
+    readVoltage = (analogRead(MUX_SIG) * 3.3) / 4095;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
+    Serial.print("Logic Potentiometer measure: ");
+    Serial.println(analogRead(MUX_SIG));
+    Serial.print("Pot getted voltage: ");
+    Serial.println(readVoltage);
+    Serial.print("Pot position: ");
+    Serial.println((readVoltage*DT5_RATIO*2));
+    i++;
+    delay(1000);
+  }
   return readVoltage * DT5_RATIO * 2; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 
@@ -309,8 +320,6 @@ void loop() {
  LoRa.print(CSV_Separator());
 // Write the potentiometer state that controls the motor 
 LoRa.print("Pot: ");
-Serial.print("Pot: ");
-Serial.println(PotentiometerRead());
 LoRa.print(PotentiometerRead());
 LoRa.print(CSV_Separator());
  // Write Solar Modules voltage
