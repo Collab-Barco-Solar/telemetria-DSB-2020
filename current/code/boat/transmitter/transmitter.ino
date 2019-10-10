@@ -104,10 +104,13 @@ Adafruit_ADS1115 ads_battery(BATTERY);
 void SetMuxChannel ( int channel ) {
   
   digitalWrite(S0, channel>>0&1);
+  delay(2.5);
   digitalWrite(S1, channel>>1&1);
+  delay(2.5);
   digitalWrite(S2, channel>>2&1);
+  delay(2.5);
   digitalWrite(S3, channel>>3&1); 
-  
+  delay(2.5);
 }
 
 double LatitudeGPS( ){
