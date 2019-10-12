@@ -29,7 +29,7 @@
 #define S2 13
 #define S3 0
 // MUX ENABLE  -> CONNECTED TO DE GROUND
-#define MUX_SIG 33 //MUX input Pin
+#define MUX_SIG 4 //MUX input Pin
 
 // MUX input pins
 
@@ -107,7 +107,7 @@ void SetMuxChannel ( int channel ) {
   digitalWrite(S1, channel>>1&1);
   digitalWrite(S2, channel>>2&1);
   digitalWrite(S3, channel>>3&1); 
-  delay(10)
+  delay(10);
 
 }
 
