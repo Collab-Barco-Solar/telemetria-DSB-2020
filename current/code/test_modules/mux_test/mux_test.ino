@@ -56,9 +56,8 @@ void SetMuxChannel(int ChannelOrder[]){
 
 float PotentiometerRead(){
   SetMuxChannel(MUX_CH[4]);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 1024;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
-  
-  return readVoltage * DT4_RATIO * 2; //Multiply by the ratio of the voltage divider to find the true voltage value
+  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4096;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
+  return readVoltage; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 
 char CSV_Separator(){
@@ -90,7 +89,19 @@ void setup()
 void loop()
 {
 
-  Serial.print("Potentiometer: ");
+ 
+  for (int i = 0; i < 16; i++)
+  {
+    SetMuxChannel(MUX_CH[i]);
+    Serial.print("PORTA: ");
+    Serial.print(i);
+    Serial.print(" \t ");
+    float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4096;  //if analog read == 1024, it is reading 3.3V, so convert the reading from bits to Voltage
+    return readVoltage; //Multiply by the ratio of the voltage divider to find the true voltage value
+    Serial.print(" TENSÃO: ");
+    Serial.println(readVoltage);
+    
+  }
   Serial.println(PotentiometerRead());
 
 
