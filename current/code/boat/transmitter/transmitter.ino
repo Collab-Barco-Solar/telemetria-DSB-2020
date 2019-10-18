@@ -81,7 +81,7 @@ float DT5_RATIO = 1.552971576f; // VOLTAGE DIVIDER FOR POTENTIOMETER
 
 String rssi = "RSSI --";
 String packSize = "--";
-String packet ;
+String packet;
 
 TinyGPSPlus gps;      // GPS object
 HardwareSerial ss(2); // Hardware Serial comunication object
