@@ -21,7 +21,6 @@
 #define TXPin    12  // Neo6M TX pin
 #define GPSBaud 9600 // Neo6M Baud rate
 
-
 //MUX control pins
 
 #define S0 32 //MUX control pins
@@ -30,6 +29,14 @@
 #define S3 0
 // MUX ENABLE  -> CONNECTED TO DE GROUND
 #define MUX_SIG 4 //MUX input Pin
+
+// polynomial coefficients
+
+#define   p5 17.5938359490609
+#define   p4  1.21697808640912 
+#define   p3  -0.000168313273959029
+#define   p2  7.69758075646963e-08
+#define   p1  -1.21956845031952e-11 
 
 // MUX input pins
 
@@ -100,6 +107,12 @@ Adafruit_ADS1115 ads_battery(BATTERY);
 
 //functions
 
+float polyfit(int analogread)
+{
+  float fittedReading;  
+  fittedReading = (value*value*value*value*p1)+(value*value*value*p2)+(value*value*p3) + (value*p4) + p5;
+  return fittedReading
+}
 
 void SetMuxChannel ( int channel ) {
   
@@ -139,7 +152,7 @@ float BatteryCurrentRead(){
 
 float PotentiometerRead(){
   SetMuxChannel(PotMux);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
+  float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT5_RATIO * 2; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
@@ -181,27 +194,27 @@ float CoolerRightRead(){
 }
 float AuxiliaryBatteryRead(){
   SetMuxChannel(BatAMux);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
+  float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT2_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 float AuxiliaryBatteryCurrentRead(){
   SetMuxChannel(ACS1Mux);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
+  float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT4_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 
 float PhotovoltaicModulesRead(){
   SetMuxChannel(PhotoMux);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
+  float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT3_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 
 float BatteryBankRead(){
   SetMuxChannel(BatBankMux);
-  float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
+  float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
   
   return readVoltage * DT1_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
