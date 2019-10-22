@@ -24,16 +24,26 @@ void setup() {
 }
 
 void loop() {
-  start = micros();
+  
   value = analogRead(pin);
+  //.print("Valor lido Logico: ");
+  //Serial.print(value);
+  //Serial.print(" : ");
+  start = micros();
   valuefitted = (value*value*value*value*p1)+(value*value*value*p2)+(value*value*p3) + (value*p4) + p5;
   potvoltage = (valuefitted * 3.3)/4095;
-  Serial.print(valuefitted);
-  Serial.print(" ; ");
-  Serial.print(potvoltage * DT5_RATIO * 2);
-  Serial.print(" ; ");
   stoptime = micros();
+  //Serial.print("Valor ajustado Logico: ");
+  //Serial.print(valuefitted);
+  //Serial.print(" ; ");
+  //Serial.print("Tensao de leitura ajustada: ");
+  //Serial.print(potvoltage);
+  //Serial.print(" ; ");
+  Serial.print("Posicao POT: ");
+  Serial.print(potvoltage * DT5_RATIO * 2,1);
+  Serial.print(" ; ");
+  
   Serial.print(stoptime-start);
   Serial.println(" ; ");
-  delay(50);
+  delay(500);
 }
