@@ -107,11 +107,11 @@ Adafruit_ADS1115 ads_battery(BATTERY);
 
 //functions
 
-float polyfit(int analogread)
+float polyfit(int value)
 {
   float fittedReading;  
   fittedReading = (value*value*value*value*p1)+(value*value*value*p2)+(value*value*p3) + (value*p4) + p5;
-  return fittedReading
+  return fittedReading;
 }
 
 void SetMuxChannel ( int channel ) {
