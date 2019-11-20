@@ -3,31 +3,38 @@
 #include <SPI.h>
 #include <LoRa.h>
 #include <Wire.h>
-#include <TinyGPS++.h>
-#include <HardwareSerial.h>
-#include <Adafruit_ADS1015.h>
+//#include <TinyGPS++.h>
+//#include <HardwareSerial.h>
+//#include <Adafruit_ADS1015.h>
 #include <LiquidCrystal_I2C.h>
 
 // set the LCD number of columns and rows
+int lcdColumns = 20;
+int lcdRows = 4;
+char first_line[10];
+char second_line[10];
+char third_line[10];
+char fourth_line[10];
+// set LCD address, number of columns and rows
+// if you don't know your display address, run an I2C scanner sketch
+LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows);  
 
-LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
-
-void setup()
-{
-  lcd.init();                      // initialize the lcd 
-  // Print a message to the LCD.
+void setup(){
+  // initialize LCD
+  lcd.init();
+  // turn on LCD backlight                      
   lcd.backlight();
-  lcd.setCursor(3,0);
-  lcd.print("Hello, world!");
-  lcd.setCursor(2,1);
-  lcd.print("Ywrobot Arduino!");
-   lcd.setCursor(0,2);
-  lcd.print("Arduino LCM IIC 2004");
-   lcd.setCursor(2,3);
-  lcd.print("Power By Ec-yuan!");
+}
+
+void loop(){
+  // set cursor to first column, first row
+  lcd.setCursor(0, 0);
+  // print message
+  lcd.print("Baterias"); 
+  lcd.setCursor(0,1);
+  lcd.print("Hello, World!");
+  delay(1000);
+  lcd.clear(); 
 }
 
 
-void loop()
-{
-}
