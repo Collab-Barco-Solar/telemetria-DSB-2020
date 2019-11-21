@@ -11107,6 +11107,11 @@ http://embedded-lab.com/blog/a-brief-overview-of-allegro-acs712-current-sensor-p
 <part name="R14" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="12k"/>
 <part name="R2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="12k"/>
 <part name="X5" library="con-molex-micro-fit-3_0" deviceset="HEADER_POS6_?" device="43045-0612" override_package3d_urn="urn:adsk.eagle:package:15245787/2" override_package_urn="urn:adsk.eagle:footprint:15245788/1"/>
+<part name="R29" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="2.2k"/>
+<part name="R30" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="3.9k"/>
+<part name="R31" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="2.2k"/>
+<part name="R32" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="0204/7" package3d_urn="urn:adsk.eagle:package:23498/2" value="3.9k"/>
+<part name="GND9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -11117,7 +11122,7 @@ http://embedded-lab.com/blog/a-brief-overview-of-allegro-acs712-current-sensor-p
 <frame x1="-81.28" y1="-43.18" x2="-40.64" y2="7.62" columns="0" rows="0" layer="91" border-left="no" border-top="no" border-right="no" border-bottom="no"/>
 <frame x1="-13.97" y1="-43.18" x2="26.67" y2="7.62" columns="0" rows="0" layer="91" border-left="no" border-top="no" border-right="no" border-bottom="no"/>
 <text x="-7.62" y="-41.91" size="2.54" layer="91">Leitura Analógica</text>
-<frame x1="-22.86" y1="-49.53" x2="166.37" y2="25.4" columns="0" rows="0" layer="91" border-left="no" border-top="no" border-right="no" border-bottom="no"/>
+<frame x1="-20.32" y1="-49.53" x2="224.79" y2="25.4" columns="0" rows="0" layer="91" border-left="no" border-top="no" border-right="no" border-bottom="no"/>
 <text x="66.548" y="13.716" size="5.08" layer="91">DT's 4</text>
 <frame x1="-96.52" y1="-49.53" x2="-24.13" y2="25.4" columns="0" rows="0" layer="91" border-left="no" border-top="no" border-right="no" border-bottom="no"/>
 <text x="-70.866" y="13.462" size="5.08" layer="91">DT's 3</text>
@@ -11131,6 +11136,8 @@ http://embedded-lab.com/blog/a-brief-overview-of-allegro-acs712-current-sensor-p
 <frame x1="-95.758" y1="31.242" x2="96.012" y2="106.172" columns="0" rows="0" layer="91" border-left="no" border-top="no" border-right="no" border-bottom="no"/>
 <text x="-9.906" y="95.25" size="5.08" layer="91">DT's 2</text>
 <text x="-78.74" y="39.624" size="2.54" layer="91">Leitura Analógica</text>
+<frame x1="165.1" y1="-43.18" x2="218.44" y2="7.62" columns="8" rows="5" layer="91" border-left="no" border-top="no" border-right="no" border-bottom="no"/>
+<text x="173.99" y="-41.91" size="2.54" layer="91">Leituras Digitais Extras</text>
 </plain>
 <instances>
 <instance part="R1" gate="G$1" x="-58.42" y="-7.62" smashed="yes">
@@ -11307,6 +11314,25 @@ http://embedded-lab.com/blog/a-brief-overview-of-allegro-acs712-current-sensor-p
 <attribute name="VALUE" x="-10.16" y="-62.23" size="1.778" layer="96" rot="R90"/>
 <attribute name="NAME" x="-31.242" y="-62.23" size="1.778" layer="95" rot="R90"/>
 </instance>
+<instance part="R29" gate="G$1" x="182.88" y="-6.35" smashed="yes" rot="R180">
+<attribute name="NAME" x="184.404" y="-7.5946" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="185.42" y="-3.302" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="R30" gate="G$1" x="177.8" y="-13.97" smashed="yes" rot="R270">
+<attribute name="NAME" x="174.7266" y="-12.446" size="1.778" layer="95" rot="R270"/>
+<attribute name="VALUE" x="179.324" y="-11.43" size="1.778" layer="96" rot="R270"/>
+</instance>
+<instance part="R31" gate="G$1" x="210.82" y="-6.35" smashed="yes">
+<attribute name="NAME" x="209.042" y="-9.4234" size="1.778" layer="95"/>
+<attribute name="VALUE" x="208.788" y="-4.826" size="1.778" layer="96"/>
+</instance>
+<instance part="R32" gate="G$1" x="205.74" y="-13.97" smashed="yes" rot="R90">
+<attribute name="NAME" x="204.4954" y="-16.256" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="209.042" y="-16.51" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="GND9" gate="1" x="191.77" y="-34.036" smashed="yes">
+<attribute name="VALUE" x="189.23" y="-36.576" size="1.778" layer="96"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -11466,17 +11492,23 @@ http://embedded-lab.com/blog/a-brief-overview-of-allegro-acs712-current-sensor-p
 <label x="-184.15" y="46.99" size="1.778" layer="95" rot="R270"/>
 <pinref part="X4" gate="G$1" pin="1"/>
 </segment>
+<segment>
+<pinref part="R30" gate="G$1" pin="2"/>
+<wire x1="177.8" y1="-19.05" x2="177.8" y2="-24.13" width="0.1524" layer="91"/>
+<pinref part="R32" gate="G$1" pin="1"/>
+<wire x1="205.74" y1="-19.05" x2="205.74" y2="-24.13" width="0.1524" layer="91"/>
+<wire x1="177.8" y1="-24.13" x2="191.77" y2="-24.13" width="0.1524" layer="91"/>
+<wire x1="191.77" y1="-24.13" x2="205.74" y2="-24.13" width="0.1524" layer="91"/>
+<wire x1="191.77" y1="-24.13" x2="191.77" y2="-31.496" width="0.1524" layer="91"/>
+<junction x="191.77" y="-24.13"/>
+<pinref part="GND9" gate="1" pin="GND"/>
+</segment>
 </net>
 <net name="22" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="22"/>
 <wire x1="-7.112" y1="122.682" x2="5.588" y2="122.682" width="0.1524" layer="91"/>
 <label x="6.096" y="122.936" size="1.778" layer="95" align="bottom-right"/>
-</segment>
-<segment>
-<wire x1="91.44" y1="-68.58" x2="91.44" y2="-81.28" width="0.1524" layer="91"/>
-<label x="91.44" y="-78.74" size="1.778" layer="95" rot="R90"/>
-<pinref part="X1" gate="G$1" pin="3"/>
 </segment>
 <segment>
 <pinref part="X5" gate="G$1" pin="5"/>
@@ -11493,17 +11525,22 @@ http://embedded-lab.com/blog/a-brief-overview-of-allegro-acs712-current-sensor-p
 <label x="-20.32" y="-79.502" size="1.778" layer="95"/>
 <pinref part="X5" gate="G$1" pin="4"/>
 </segment>
+<segment>
+<pinref part="X1" gate="G$1" pin="6"/>
+<wire x1="99.06" y1="-68.58" x2="99.06" y2="-81.28" width="0.1524" layer="91"/>
+<label x="99.06" y="-81.28" size="1.778" layer="95" rot="R90"/>
+</segment>
+<segment>
+<pinref part="X1" gate="G$1" pin="5"/>
+<wire x1="96.52" y1="-68.58" x2="96.52" y2="-81.28" width="0.1524" layer="91"/>
+<label x="96.52" y="-81.28" size="1.778" layer="95" rot="R90"/>
+</segment>
 </net>
 <net name="21" class="0">
 <segment>
 <pinref part="U$1" gate="G$1" pin="21"/>
 <wire x1="-7.112" y1="120.142" x2="5.588" y2="120.142" width="0.1524" layer="91"/>
 <label x="6.096" y="120.396" size="1.778" layer="95" align="bottom-right"/>
-</segment>
-<segment>
-<wire x1="93.98" y1="-68.58" x2="93.98" y2="-81.28" width="0.1524" layer="91"/>
-<label x="93.98" y="-78.74" size="1.778" layer="95" rot="R90"/>
-<pinref part="X1" gate="G$1" pin="4"/>
 </segment>
 <segment>
 <wire x1="-25.4" y1="-66.04" x2="-25.4" y2="-72.39" width="0.1524" layer="91"/>
@@ -11519,6 +11556,16 @@ http://embedded-lab.com/blog/a-brief-overview-of-allegro-acs712-current-sensor-p
 <wire x1="-22.86" y1="-66.04" x2="-22.86" y2="-71.374" width="0.1524" layer="91"/>
 <label x="-23.368" y="-76.454" size="1.778" layer="95"/>
 <pinref part="X5" gate="G$1" pin="3"/>
+</segment>
+<segment>
+<pinref part="X1" gate="G$1" pin="4"/>
+<wire x1="93.98" y1="-68.58" x2="93.98" y2="-81.28" width="0.1524" layer="91"/>
+<label x="93.98" y="-81.28" size="1.778" layer="95" rot="R90"/>
+</segment>
+<segment>
+<pinref part="X1" gate="G$1" pin="3"/>
+<wire x1="91.44" y1="-68.58" x2="91.44" y2="-81.28" width="0.1524" layer="91"/>
+<label x="91.44" y="-81.28" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="DMS_IN" class="0">
@@ -11553,12 +11600,26 @@ http://embedded-lab.com/blog/a-brief-overview-of-allegro-acs712-current-sensor-p
 <wire x1="17.272" y1="120.142" x2="17.272" y2="112.522" width="0.1524" layer="91"/>
 <label x="17.272" y="112.522" size="1.778" layer="95" rot="R90"/>
 </segment>
+<segment>
+<pinref part="R30" gate="G$1" pin="1"/>
+<pinref part="R29" gate="G$1" pin="2"/>
+<wire x1="177.8" y1="-8.89" x2="177.8" y2="-6.35" width="0.1524" layer="91"/>
+<wire x1="177.8" y1="-6.35" x2="172.212" y2="-6.35" width="0.1524" layer="91"/>
+<label x="172.212" y="-6.35" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="C14" class="0">
 <segment>
 <pinref part="HC4067" gate="G$1" pin="C14"/>
 <wire x1="19.812" y1="120.142" x2="19.812" y2="112.522" width="0.1524" layer="91"/>
 <label x="19.812" y="112.522" size="1.778" layer="95" rot="R90"/>
+</segment>
+<segment>
+<pinref part="R32" gate="G$1" pin="2"/>
+<pinref part="R31" gate="G$1" pin="1"/>
+<wire x1="205.74" y1="-8.89" x2="205.74" y2="-6.35" width="0.1524" layer="91"/>
+<wire x1="205.74" y1="-6.35" x2="200.152" y2="-6.35" width="0.1524" layer="91"/>
+<label x="200.152" y="-6.096" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="C13" class="0">
@@ -11790,9 +11851,9 @@ http://embedded-lab.com/blog/a-brief-overview-of-allegro-acs712-current-sensor-p
 <label x="20.828" y="78.232" size="1.778" layer="95" rot="R180"/>
 </segment>
 <segment>
-<wire x1="99.06" y1="-68.58" x2="99.06" y2="-81.28" width="0.1524" layer="91"/>
-<label x="99.06" y="-78.74" size="1.778" layer="95" rot="R90"/>
-<pinref part="X1" gate="G$1" pin="6"/>
+<wire x1="86.36" y1="-68.58" x2="86.36" y2="-81.28" width="0.1524" layer="91"/>
+<pinref part="X1" gate="G$1" pin="1"/>
+<label x="85.344" y="-80.772" size="1.778" layer="95" rot="R90"/>
 </segment>
 </net>
 <net name="COOLER_E" class="0">
@@ -12097,25 +12158,28 @@ http://embedded-lab.com/blog/a-brief-overview-of-allegro-acs712-current-sensor-p
 <wire x1="8.382" y1="57.15" x2="8.382" y2="52.07" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$5" class="0">
+<net name="EXTRA1" class="0">
+<segment>
+<pinref part="R29" gate="G$1" pin="1"/>
+<wire x1="187.96" y1="-6.35" x2="187.96" y2="0" width="0.1524" layer="91"/>
+<label x="190.5" y="-2.54" size="1.778" layer="95" rot="R90"/>
+</segment>
+<segment>
+<pinref part="X3" gate="G$1" pin="2"/>
+<wire x1="-123.952" y1="-67.31" x2="-123.952" y2="-82.296" width="0.1524" layer="91"/>
+<label x="-124.206" y="-90.932" size="1.778" layer="95" rot="R90"/>
+</segment>
+</net>
+<net name="EXTRA2" class="0">
+<segment>
+<pinref part="R31" gate="G$1" pin="2"/>
+<wire x1="215.9" y1="-6.35" x2="215.9" y2="0" width="0.1524" layer="91"/>
+<label x="214.63" y="-2.794" size="1.778" layer="95" rot="R90"/>
+</segment>
 <segment>
 <wire x1="88.9" y1="-68.58" x2="88.9" y2="-81.28" width="0.1524" layer="91"/>
-<label x="88.9" y="-78.74" size="1.778" layer="95" rot="R90"/>
+<label x="88.9" y="-81.28" size="1.778" layer="95" rot="R90"/>
 <pinref part="X1" gate="G$1" pin="2"/>
-</segment>
-</net>
-<net name="N$6" class="0">
-<segment>
-<wire x1="86.36" y1="-68.58" x2="86.36" y2="-81.28" width="0.1524" layer="91"/>
-<label x="86.36" y="-78.74" size="1.778" layer="95" rot="R90"/>
-<pinref part="X1" gate="G$1" pin="1"/>
-</segment>
-</net>
-<net name="N$8" class="0">
-<segment>
-<wire x1="96.52" y1="-68.58" x2="96.52" y2="-81.28" width="0.1524" layer="91"/>
-<label x="96.52" y="-78.74" size="1.778" layer="95" rot="R90"/>
-<pinref part="X1" gate="G$1" pin="5"/>
 </segment>
 </net>
 </nets>
