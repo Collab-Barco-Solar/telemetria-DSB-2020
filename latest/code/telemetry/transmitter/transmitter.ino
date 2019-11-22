@@ -3,9 +3,10 @@
 #include <SPI.h>
 #include <LoRa.h>
 #include <Wire.h>
-#include <TinyGPS++.h>
+//#include <TinyGPS++.h>
 #include <HardwareSerial.h>
 #include <Adafruit_ADS1015.h>
+#include <LiquidCrystal_I2C.h>
 
 
 //pinos
@@ -36,7 +37,7 @@ const float p4 = 1.21697808640912;
 const float p3 = -0.000168313273959029;
 const float p2 =  7.69758075646963e-08;
 const float p1 = -1.21956845031952e-11;
-
+char buf[20];
 // MUX input pins
 
  int DMSMux = 0;
@@ -89,7 +90,7 @@ String rssi = "RSSI --";
 String packSize = "--";
 String packet;
 
-TinyGPSPlus gps;      // GPS object
+//TinyGPSPlus gps;      // GPS object
 HardwareSerial ss(2); // Hardware Serial comunication object
 
 Adafruit_ADS1115 ads_motor(MOTOR);
@@ -104,7 +105,21 @@ Adafruit_ADS1115 ads_battery(BATTERY);
   // ads.setGain(GAIN_EIGHT);      // 8x gain   +/- 0.512V  1 bit =   0.015625mV
   // ads.setGain(GAIN_SIXTEEN);    // 16x gain  +/- 0.256V  1 bit =   0.0078125mV
 
+
+
 //functions
+LiquidCrystal_I2C lcd(0x27, 20, 4);  
+
+// implementando lcd para teste:
+void potentiomenterScreen(char* buffer)
+{
+  lcd.setCursor(0, 0);
+  lcd.print("POT: ");
+  lcd.setCursor(5, 0);
+  lcd.print(buffer);
+  lcd.setCursor(0,3);
+  lcd.print("SOLARES-POENTE 2019");
+}
 
 float polyfit(float value)
 {
@@ -123,7 +138,7 @@ void SetMuxChannel ( int channel ) {
   delay(10);
 
 }
-
+/*
 double LatitudeGPS( ){
 
   return gps.location.lat();
@@ -133,7 +148,7 @@ double LongitudeGPS( ){
   
   return gps.location.lng();
 }
-
+*/
 char CSV_Separator(){
   return (' ; ');
 }
@@ -153,7 +168,8 @@ float BatteryCurrentRead(){
 float PotentiometerRead(){
   SetMuxChannel(PotMux);
   float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
-  
+  sprintf(buf, "%.1f", (readVoltage * DT5_RATIO * 2));
+  potentiomenterScreen(buf);
   return readVoltage * DT5_RATIO * 2; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
 
@@ -233,9 +249,14 @@ boolean RightPumpRead(){
 
 
 //setup
-
 void setup() {
-  
+  // lcd thigs
+
+  // initialize LCD
+  lcd.init();
+  // turn on LCD backlight                      
+  lcd.backlight();
+  //
   Serial.begin(BAUD);
   ss.begin(GPSBaud, SERIAL_8N1, TXPin, RXPin); // GPS serial communication
 
@@ -282,10 +303,11 @@ void loop() {
   // Create and send packet
 
   // Update GPS
-  gps.encode(ss.read());
+  // gps.encode(ss.read());
   
   LoRa.beginPacket();
   // Write GPS Latitude
+  /*
   LoRa.print("GPS.LAT: "); 
   LoRa.print(LatitudeGPS());
   LoRa.print(CSV_Separator());
@@ -293,7 +315,7 @@ void loop() {
   LoRa.print("GPS.LONG: "); 
   LoRa.print(LongitudeGPS());
   LoRa.print(CSV_Separator());
-
+  */
   //MUX readings
     
   //Write DMS reading
