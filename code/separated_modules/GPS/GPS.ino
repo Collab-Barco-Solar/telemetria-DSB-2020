@@ -3,6 +3,9 @@
 /*
    Exemplo de código que usa o Tiny GPS++ pra receber o tempo e localização
 */
+
+#define BAUD 2000000
+
 static const int RXPin = 15, TXPin = 12;
 static const uint32_t GPSBaud = 9600;
 
@@ -14,7 +17,7 @@ HardwareSerial ss(2);
 
 void setup()
 {
-  Serial.begin(2000000);
+  Serial.begin(BAUD);
   ss.begin(GPSBaud, SERIAL_8N1, TXPin, RXPin);
 
   Serial.println(F("DeviceExample.ino"));
