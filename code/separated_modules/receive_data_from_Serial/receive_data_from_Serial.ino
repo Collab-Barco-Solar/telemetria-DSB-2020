@@ -1,24 +1,23 @@
-// Feito para o NODE-MCU
-#include <HardwareSerial.h>
 
-HardwareSerial serial_sd(2); // Try to change this (2)
+// Watch out the Baud rate, if too high it may crash or not send
 
-
-#define BAUD 300
-#define SD_BAUD 300
-#define TXPin 1
-#define RXPin 3
+#define BAUD 1000000
+#define SD_BAUD 1000000
 
 void setup() {
 
   Serial.begin(BAUD);
-
+  Serial2.begin(SD_BAUD);
+  
 }
 
 void loop() {
 
-  long n;
-  n = Serial.read();
-  Serial.println(n);
-  //Serial.swap();
+  int n;
+  if (Serial2.available() > 0 ) {
+    n = Serial2.read();
+    Serial.println(n);
+  }
+  
+  
 }

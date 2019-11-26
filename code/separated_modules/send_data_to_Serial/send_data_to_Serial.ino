@@ -1,10 +1,7 @@
-// Feito para o ESP32 LOLIN32
-#include <HardwareSerial.h>
 
-HardwareSerial serial_sd(2); // Try to change this (2)
-
-#define BAUD 300
-#define SD_BAUD 300
+// Watch out the Baud rate, if too high it may crash or not send
+#define BAUD 1000000
+#define SD_BAUD 1000000
 
 void setup() {
   
@@ -13,15 +10,14 @@ void setup() {
 
 }
 
+int n = 0;
+
 void loop() {
-
-  randomSeed(42);
-
-  int r = 0;
-  r = random(0,12);
   
-  Serial2.write(r);
-  Serial.println(r);
+  Serial2.write(n);
+  Serial.println(n);
+
+  n++;
 
   delay(100);
 }
