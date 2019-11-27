@@ -1,5 +1,4 @@
-// bibliotecas
-
+//libraries
 #include <SPI.h>
 #include <LoRa.h>
 #include <Wire.h>
@@ -8,7 +7,7 @@
 //#include <Adafruit_ADS1015.h>
 #include <LiquidCrystal_I2C.h>
 
-// set the LCD number of columns and rows
+//set the LCD number of columns and rows
 int lcdColumns = 20;
 int lcdRows = 4;
 char feliz[17] ="BOA COMPETICAO!";
@@ -16,8 +15,8 @@ char inici[20] = "SOLARES POENTE 2020";
 char correnteMotor[9] = "IM: 80A", potMotor[9] = "PM:120W", potGeracao[9] = "PG:400W";
 char valorIM[4] = "50", valorPM[4] = "40", valorPG[4] = "39";
 char cemLinhaZero[15] = " 0 000 000", cemLinhaUm[15] = "00 0 0 0 0", cemLinhaDois[15] = " 0 0 0 0 0", cemLinhaTres[15] = " 0 000 000";
-// set LCD address, number of columns and rows
-// if you don't know your display address, run an I2C scanner sketch
+//set LCD address, number of columns and rows
+//if you don't know your display address, run an I2C scanner sketch
 LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows);  
 
 void setup(){
@@ -31,6 +30,7 @@ void setup(){
 }
 
 void loop(){
+  
 }
 
 void inicializacao()
