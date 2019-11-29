@@ -21,7 +21,7 @@ byte chr1[6]={
     B1111,
     B1111,
     B1111
-};  
+};
 byte chr2[6] =  { 
     B0000,
     B0000,
@@ -43,6 +43,8 @@ LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows);
 
 void setup(){
   // initialize LCD
+  Serial.begin(115200);
+  Serial.println("deu certo");
   lcd.init();
   // turn on LCD backlight                      
   lcd.backlight();
@@ -50,8 +52,9 @@ void setup(){
   lcd.createChar(1, chr2);
   lcd.createChar(2, chr3);
   inicializacao();
-  delay(3000);
-  telaprincipal();
+  //delay(3000);
+  //num0();
+ // telaprincipal();
 }
 
 void loop()
@@ -69,27 +72,50 @@ void inicializacao()
 
 void num0()
 {
- lcd.setCursor(0,0);
- for(int i=0;i<3;i++)
- lcd.write(0);
- lcd.setCursor(0,1);
- lcd.write(0);
- lcd.print(" ");
- lcd.write(0);
- lcd.setCursor(0,2);
- lcd.write(0);
- lcd.print(" ");
- lcd.write(0);
- lcd.setCursor(0,3);
- for(int i=0;i<3;i++)
- lcd.write(0);
+  lcd.setCursor(0,0);
+  lcd.write(0);
+  lcd.setCursor(0,1);
+  lcd.write(0);
+  lcd.setCursor(0,2);
+  lcd.write(0);
+  lcd.setCursor(0,3);
+  lcd.write(0);
+  lcd.setCursor(1,0);
+  lcd.write(0);
+  lcd.setCursor(1,3);
+  lcd.write(0);
+  lcd.setCursor(2,0);
+  lcd.write(0);
+  lcd.setCursor(2,1);
+  lcd.write(0);
+  lcd.setCursor(2,2);
+  lcd.write(0);
+  lcd.setCursor(2,3);
+  lcd.write(0);
+// lcd.setCursor(0,0);
+// for(int i=0;i<3;i++)
+// {
+// lcd.write(0);
+// lcd.setCursor(i,0);
+// }
+// lcd.setCursor(0,1);
+// lcd.write(0);
+// lcd.print(" ");
+// lcd.write(0);
+// lcd.setCursor(0,2);
+// lcd.write(0);
+// lcd.print(" ");
+// lcd.write(0);
+// lcd.setCursor(0,3);
+// for(int i=0;i<3;i++)
+// lcd.write(0);
 }
 
 void telaprincipal()
 {
   lcd.clear();
   lcd.setCursor(0,0);
-  num0();
+  
 //  lcd.setCursor(0,1);
 //  lcd.print(cemLinhaUm);
 //  lcd.setCursor(0,2);
