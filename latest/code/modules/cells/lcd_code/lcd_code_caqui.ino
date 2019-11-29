@@ -14,8 +14,30 @@ char feliz[17] ="BOA COMPETICAO!";
 char inici[20] = "SOLARES POENTE 2020";
 char correnteMotor[9] = "IM: 80A", potMotor[9] = "PM:120W", potGeracao[9] = "PG:400W";
 char valorIM[4] = "50", valorPM[4] = "40", valorPG[4] = "39";
-char cemLinhaZero[15] = " 0 000 000", cemLinhaUm[15] = "00 0 0 0 0", cemLinhaDois[15] = " 0 0 0 0 0", cemLinhaTres[15] = " 0 000 000";
-//set LCD address, number of columns and rows
+byte chr1[6]={ 
+    B1111,
+    B1111,
+    B1111,
+    B1111,
+    B1111,
+    B1111
+};  
+byte chr2[6] =  { 
+    B0000,
+    B0000,
+    B0000,
+    B1111,
+    B1111,
+    B1111
+};
+byte chr3[6] =  { 
+    B1111,
+    B1111,
+    B1111,
+    B0000,
+    B0000,
+    B0000
+};
 //if you don't know your display address, run an I2C scanner sketch
 LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows);  
 
@@ -24,6 +46,9 @@ void setup(){
   lcd.init();
   // turn on LCD backlight                      
   lcd.backlight();
+  lcd.createChar(0, chr1);
+  lcd.createChar(1, chr2);
+  lcd.createChar(2, chr3);
   inicializacao();
   delay(3000);
   telaprincipal();
@@ -59,4 +84,202 @@ void telaprincipal()
   lcd.print(potMotor);
   lcd.setCursor(12,2);
   lcd.print(potGeracao);
+}
+
+void num0()
+{
+ lcd.setCursor(0,0);
+ for(int i=0;i<3;i++)
+ lcd.write(0);
+ lcd.setCursor(0,1);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,2);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,3);
+ for(int i=0;i<3;i++)
+ lcd.write(0);
+}
+
+void num1()
+{
+ lcd.setCursor(0,0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.setCursor(0,1);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,2);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,3);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+}
+
+void num2()
+{
+ lcd.setCursor(0,0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.setCursor(0,1);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,2);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,3);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+}
+
+void num3()
+{
+ lcd.setCursor(0,0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.setCursor(0,1);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,2);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,3);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+}
+
+void num4()
+{
+ lcd.setCursor(0,0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.setCursor(0,1);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,2);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,3);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+}
+
+void num5()
+{
+ lcd.setCursor(0,0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.setCursor(0,1);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,2);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,3);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+}
+
+void num6()
+{
+ lcd.setCursor(0,0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.setCursor(0,1);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,2);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,3);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+}
+
+void num7()
+{
+ lcd.setCursor(0,0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.setCursor(0,1);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,2);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,3);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+}
+
+void num8()
+{
+ lcd.setCursor(0,0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.setCursor(0,1);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,2);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,3);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+}
+
+void num9()
+{
+ lcd.setCursor(0,0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.setCursor(0,1);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,2);
+ lcd.write(0);
+ lcd.print(" ");
+ lcd.write(0);
+ lcd.setCursor(0,3);
+ lcd.write(0);
+ lcd.write(0);
+ lcd.write(0);
 }
