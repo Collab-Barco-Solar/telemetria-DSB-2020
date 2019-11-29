@@ -54,8 +54,8 @@ void setup(){
   telaprincipal();
 }
 
-void loop(){
-  
+void loop()
+{  
 }
 
 void inicializacao()
@@ -65,25 +65,6 @@ void inicializacao()
   lcd.print(feliz);
   lcd.setCursor(0,2);
   lcd.print(inici);
-}
-
-void telaprincipal()
-{
-  lcd.clear();
-  lcd.setCursor(0,0);
-  lcd.print(cemLinhaZero);
-  lcd.setCursor(0,1);
-  lcd.print(cemLinhaUm);
-  lcd.setCursor(0,2);
-  lcd.print(cemLinhaDois);
-  lcd.setCursor(0,3);
-  lcd.print(cemLinhaTres);
-  lcd.setCursor(12,0);
-  lcd.print(correnteMotor);
-  lcd.setCursor(12,1);
-  lcd.print(potMotor);
-  lcd.setCursor(12,2);
-  lcd.print(potGeracao);
 }
 
 void num0()
@@ -102,6 +83,25 @@ void num0()
  lcd.setCursor(0,3);
  for(int i=0;i<3;i++)
  lcd.write(0);
+}
+
+void telaprincipal()
+{
+  lcd.clear();
+  lcd.setCursor(0,0);
+  num0();
+//  lcd.setCursor(0,1);
+//  lcd.print(cemLinhaUm);
+//  lcd.setCursor(0,2);
+//  lcd.print(cemLinhaDois);
+//  lcd.setCursor(0,3);
+//  lcd.print(cemLinhaTres);
+//  lcd.setCursor(12,0);
+//  lcd.print(correnteMotor);
+//  lcd.setCursor(12,1);
+//  lcd.print(potMotor);
+//  lcd.setCursor(12,2);
+//  lcd.print(potGeracao);
 }
 
 void num1()
