@@ -3,7 +3,7 @@
 #include <SPI.h>
 #include <LoRa.h>
 #include <Wire.h>
-//#include <TinyGPS++.h>
+#include <TinyGPS++.h>
 #include <HardwareSerial.h>
 #include <Adafruit_ADS1015.h>
 #include <LiquidCrystal_I2C.h>
@@ -56,11 +56,11 @@ char buf[20];
  int ACS2Mux = 13;
 
 //#define PIN_ACS 33  //??
-//#define PIN_BAT_AUX 13
-//#define PIN_POTENCIOMETER 14
-//#define PIN_BAT_BANK_V 2
-//#define PIN_BAT_BANK_C 21
-//#define PIN_MOTOR 22
+#define PIN_BAT_AUX 13
+#define PIN_POTENCIOMETER 14
+#define PIN_BAT_BANK_V 2
+#define PIN_BAT_BANK_C 21
+#define PIN_MOTOR 22
 
 
 //defines
@@ -90,7 +90,7 @@ String rssi = "RSSI --";
 String packSize = "--";
 String packet;
 
-//TinyGPSPlus gps;      // GPS object
+TinyGPSPlus gps;      // GPS object
 HardwareSerial ss(2); // Hardware Serial comunication object
 
 Adafruit_ADS1115 ads_motor(MOTOR);
@@ -138,7 +138,7 @@ void SetMuxChannel ( int channel ) {
   delay(10);
 
 }
-/*
+
 double LatitudeGPS( ){
 
   return gps.location.lat();
@@ -148,7 +148,7 @@ double LongitudeGPS( ){
   
   return gps.location.lng();
 }
-*/
+
 char CSV_Separator(){
   return (' ; ');
 }
@@ -307,7 +307,7 @@ void loop() {
   
   LoRa.beginPacket();
   // Write GPS Latitude
-  /*
+
   LoRa.print("GPS.LAT: "); 
   LoRa.print(LatitudeGPS());
   LoRa.print(CSV_Separator());
@@ -315,7 +315,6 @@ void loop() {
   LoRa.print("GPS.LONG: "); 
   LoRa.print(LongitudeGPS());
   LoRa.print(CSV_Separator());
-  */
   //MUX readings
     
   //Write DMS reading
