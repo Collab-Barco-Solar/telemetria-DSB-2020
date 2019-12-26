@@ -8,7 +8,7 @@
 </settings>
 <grid distance="25" unitdist="mil" unit="mil" style="lines" multiple="1" display="no" altdistance="5" altunitdist="mil" altunit="mil"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="no" active="yes"/>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="no"/>
 <layer number="3" name="Route3" color="17" fill="1" visible="no" active="no"/>
 <layer number="4" name="Route4" color="18" fill="1" visible="no" active="no"/>
@@ -2492,16 +2492,6 @@ design rules under a new name.</description>
 <contactref element="R47" pad="1"/>
 <contactref element="C3" pad="-"/>
 <contactref element="C5" pad="-"/>
-<polygon width="0.508" layer="1">
-<vertex x="-3.81" y="81.28"/>
-<vertex x="-3.81" y="-5.08"/>
-<vertex x="-1.27" y="-7.62"/>
-<vertex x="158.115" y="-7.62"/>
-<vertex x="164.465" y="-1.27"/>
-<vertex x="164.465" y="85.725"/>
-<vertex x="163.83" y="86.36"/>
-<vertex x="1.27" y="86.36"/>
-</polygon>
 <wire x1="16.51" y1="8.255" x2="15.875" y2="8.89" width="0.8128" layer="16"/>
 <wire x1="15.875" y1="13.335" x2="15.875" y2="8.89" width="0.8128" layer="16"/>
 <wire x1="72.485" y1="32.22" x2="72.485" y2="40.037" width="0.8128" layer="16"/>
@@ -2518,10 +2508,8 @@ design rules under a new name.</description>
 <wire x1="61.595" y1="69.85" x2="68.58" y2="69.85" width="0.8128" layer="16"/>
 <wire x1="68.58" y1="69.85" x2="72.39" y2="69.85" width="0.8128" layer="16"/>
 <wire x1="80.645" y1="61.595" x2="80.645" y2="53.34" width="0.8128" layer="16"/>
-<wire x1="80.645" y1="53.34" x2="74.93" y2="47.625" width="0.8128" layer="16"/>
-<wire x1="74.93" y1="47.625" x2="73.025" y2="47.625" width="0.8128" layer="16"/>
-<wire x1="73.025" y1="47.625" x2="71.882" y2="46.482" width="0.8128" layer="16"/>
-<wire x1="71.882" y1="46.482" x2="71.882" y2="40.64" width="0.8128" layer="16"/>
+<wire x1="80.645" y1="53.34" x2="71.882" y2="44.577" width="0.8128" layer="16"/>
+<wire x1="71.882" y1="44.577" x2="71.882" y2="40.64" width="0.8128" layer="16"/>
 <wire x1="72.39" y1="69.85" x2="80.645" y2="61.595" width="0.8128" layer="16"/>
 <wire x1="123.19" y1="46.99" x2="128.27" y2="46.99" width="0.8128" layer="16"/>
 <wire x1="128.27" y1="46.99" x2="128.905" y2="46.355" width="0.8128" layer="16"/>
