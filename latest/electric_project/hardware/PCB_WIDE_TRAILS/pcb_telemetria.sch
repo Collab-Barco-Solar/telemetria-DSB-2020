@@ -20547,6 +20547,7 @@ Connector</text>
 <wire x1="27.432" y1="88.9" x2="27.432" y2="91.44" width="0.1524" layer="91"/>
 <pinref part="R34" gate="G$1" pin="2"/>
 <label x="20.32" y="91.44" size="1.778" layer="95" rot="R90" xref="yes"/>
+<junction x="27.432" y="91.44"/>
 </segment>
 </net>
 <net name="BAT_BANCO" class="0">
@@ -20563,6 +20564,7 @@ Connector</text>
 <wire x1="117.348" y1="91.44" x2="117.348" y2="88.646" width="0.1524" layer="91"/>
 <pinref part="R13" gate="G$1" pin="2"/>
 <label x="106.68" y="91.44" size="1.778" layer="95" rot="R90" xref="yes"/>
+<junction x="117.348" y="91.44"/>
 </segment>
 </net>
 <net name="PV_IN" class="0">
