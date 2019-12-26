@@ -43,7 +43,7 @@ LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows);
 
 void setup(){
   // initialize LCD
-  Serial.begin(115200);
+  Serial.begin(2000000);
   Serial.println("deu certo");
   lcd.init();
   // turn on LCD backlight                      
@@ -59,6 +59,15 @@ void setup(){
 
 void loop()
 {  
+  inicializacao();
+  delay(2000);
+  telaprincipal();
+  delay(2000);
+  num0();
+  delay(2000);
+  telaprincipal();
+  delay(2000);
+  
 }
 
 void inicializacao()
