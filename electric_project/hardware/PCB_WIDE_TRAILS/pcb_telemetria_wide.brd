@@ -3,7 +3,7 @@
 <eagle version="9.4.2">
 <drawing>
 <settings>
-<setting alwaysvectorfont="no"/>
+<setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="25" unitdist="mil" unit="mil" style="lines" multiple="1" display="no" altdistance="5" altunitdist="mil" altunit="mil"/>
@@ -99,7 +99,7 @@
 <layer number="254" name="cooling" color="7" fill="1" visible="no" active="yes"/>
 </layers>
 <board>
-<fusionsync huburn="a.cGVyc29uYWw6dWUyZDkwMWJh" projecturn="a.cGVyc29uYWw6dWUyZDkwMWJhIzIwMTgwNzE0MTQwMDE5MTU2" f3durn="urn:adsk.wipprod:dm.lineage:pvF8sCnORGSreq-jBnLe5A" pcbguid="7881b7cc-d97c-4393-b963-ced47a59fb0f" lastpulledtime="" lastsyncedchangeguid="bb927db3-facb-6a83-feed-a163c9e5436e"/>
+<fusionsync huburn="a.cGVyc29uYWw6dWUyZDkwMWJh" projecturn="a.cGVyc29uYWw6dWUyZDkwMWJhIzIwMTgwNzE0MTQwMDE5MTU2" f3durn="urn:adsk.wipprod:dm.lineage:pvF8sCnORGSreq-jBnLe5A" pcbguid="7881b7cc-d97c-4393-b963-ced47a59fb0f" lastpulledtime="" lastsyncedchangeguid="52b54007-45d7-6a2b-f096-1577e5c80223"/>
 <plain>
 <wire x1="0" y1="0" x2="159.365" y2="0" width="0" layer="20"/>
 <wire x1="159.365" y1="0" x2="159.365" y2="75.87" width="0" layer="20"/>
