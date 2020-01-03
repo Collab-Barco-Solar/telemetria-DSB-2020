@@ -10,3 +10,4 @@
 
 - The GPS library is the TinyGPS, wich can be download on the link below:
     - http://arduiniana.org/libraries/tinygpsplus/
+    (or, you can find the library in the libraries folder here in this repository)
