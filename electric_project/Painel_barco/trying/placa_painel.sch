@@ -20362,14 +20362,14 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 <label x="-56.134" y="137.668" size="1.778" layer="95" rot="R90"/>
 </segment>
 <segment>
-<wire x1="-100.076" y1="87.63" x2="-100.076" y2="82.55" width="0.1524" layer="91"/>
-<label x="-100.076" y="82.55" size="1.016" layer="95" rot="R270" xref="yes"/>
-<pinref part="X7" gate="G$1" pin="2"/>
-</segment>
-<segment>
 <pinref part="TELE_CON" gate="G$1" pin="5"/>
 <wire x1="-58.674" y1="152.908" x2="-58.674" y2="137.16" width="0.1524" layer="91"/>
 <label x="-58.674" y="137.668" size="1.778" layer="95" rot="R90"/>
+</segment>
+<segment>
+<wire x1="-97.536" y1="87.63" x2="-97.536" y2="82.55" width="0.1524" layer="91"/>
+<label x="-97.536" y="82.55" size="1.016" layer="95" rot="R270" xref="yes"/>
+<pinref part="X7" gate="G$1" pin="3"/>
 </segment>
 </net>
 <net name="21" class="0">
@@ -20379,14 +20379,14 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 <label x="-61.214" y="137.668" size="1.778" layer="95" rot="R90"/>
 </segment>
 <segment>
-<wire x1="-94.996" y1="87.63" x2="-94.996" y2="82.55" width="0.1524" layer="91"/>
-<label x="-94.996" y="82.55" size="1.016" layer="95" rot="R270" xref="yes"/>
-<pinref part="X7" gate="G$1" pin="4"/>
-</segment>
-<segment>
 <pinref part="TELE_CON" gate="G$1" pin="3"/>
 <wire x1="-63.754" y1="152.908" x2="-63.754" y2="137.16" width="0.1524" layer="91"/>
 <label x="-63.754" y="137.668" size="1.778" layer="95" rot="R90"/>
+</segment>
+<segment>
+<wire x1="-102.616" y1="87.63" x2="-102.616" y2="82.55" width="0.1524" layer="91"/>
+<label x="-102.616" y="82.55" size="1.016" layer="95" rot="R270" xref="yes"/>
+<pinref part="X7" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="EXTRA2" class="0">
@@ -20473,6 +20473,19 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 <pinref part="MOTOR_CON" gate="G$1" pin="8"/>
 </segment>
 <segment>
+<wire x1="-15.24" y1="152.4" x2="-15.24" y2="144.78" width="0.1524" layer="91"/>
+<label x="-15.24" y="144.78" size="1.016" layer="95" rot="R270" xref="yes"/>
+<pinref part="MOTOR_CON" gate="G$1" pin="3"/>
+</segment>
+<segment>
+<wire x1="-12.7" y1="152.4" x2="-12.7" y2="144.78" width="0.1524" layer="91"/>
+<label x="-12.7" y="144.78" size="1.016" layer="95" rot="R270" xref="yes"/>
+<wire x1="-10.16" y1="152.4" x2="-10.16" y2="144.78" width="0.1524" layer="91"/>
+<label x="-10.16" y="144.78" size="1.016" layer="95" rot="R270" xref="yes"/>
+<pinref part="MOTOR_CON" gate="G$1" pin="4"/>
+<pinref part="MOTOR_CON" gate="G$1" pin="5"/>
+</segment>
+<segment>
 <label x="-101.6" y="139.7" size="1.016" layer="95" rot="R270" xref="yes"/>
 <pinref part="X3" gate="G$1" pin="1"/>
 <wire x1="-101.6" y1="152.4" x2="-101.6" y2="139.7" width="0.1524" layer="91"/>
@@ -20488,22 +20501,9 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 <label x="58.42" y="85.09" size="1.778" layer="95" rot="R270" xref="yes"/>
 </segment>
 <segment>
-<pinref part="X7" gate="G$1" pin="1"/>
-<wire x1="-102.616" y1="87.63" x2="-102.616" y2="82.55" width="0.1524" layer="91"/>
-<label x="-102.616" y="82.55" size="1.016" layer="95" rot="R270" xref="yes"/>
-</segment>
-<segment>
-<wire x1="-12.7" y1="152.4" x2="-12.7" y2="144.78" width="0.1524" layer="91"/>
-<label x="-12.7" y="144.78" size="1.016" layer="95" rot="R270" xref="yes"/>
-<wire x1="-10.16" y1="152.4" x2="-10.16" y2="144.78" width="0.1524" layer="91"/>
-<label x="-10.16" y="144.78" size="1.016" layer="95" rot="R270" xref="yes"/>
-<pinref part="MOTOR_CON" gate="G$1" pin="4"/>
-<pinref part="MOTOR_CON" gate="G$1" pin="5"/>
-</segment>
-<segment>
-<wire x1="-15.24" y1="152.4" x2="-15.24" y2="144.78" width="0.1524" layer="91"/>
-<label x="-15.24" y="144.78" size="1.016" layer="95" rot="R270" xref="yes"/>
-<pinref part="MOTOR_CON" gate="G$1" pin="3"/>
+<wire x1="-100.076" y1="87.63" x2="-100.076" y2="82.55" width="0.1524" layer="91"/>
+<label x="-100.076" y="82.55" size="1.016" layer="95" rot="R270" xref="yes"/>
+<pinref part="X7" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="RED_ONOFF_45V_PH" class="0">
@@ -20537,9 +20537,9 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 <label x="-51.054" y="137.16" size="1.016" layer="95" rot="R270" xref="yes"/>
 </segment>
 <segment>
-<wire x1="-20.32" y1="152.4" x2="-20.32" y2="144.78" width="0.1524" layer="91"/>
-<label x="-20.32" y="144.78" size="1.016" layer="95" rot="R270" xref="yes"/>
-<pinref part="MOTOR_CON" gate="G$1" pin="1"/>
+<wire x1="-17.78" y1="152.4" x2="-17.78" y2="144.78" width="0.1524" layer="91"/>
+<label x="-17.78" y="144.78" size="1.016" layer="95" rot="R270" xref="yes"/>
+<pinref part="MOTOR_CON" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="BB_AUTO" class="0">
@@ -20602,6 +20602,11 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 </net>
 <net name="WHITE_DMS" class="0">
 <segment>
+<wire x1="-20.32" y1="152.4" x2="-20.32" y2="144.78" width="0.1524" layer="91"/>
+<label x="-20.32" y="144.78" size="1.016" layer="95" rot="R270" xref="yes"/>
+<pinref part="MOTOR_CON" gate="G$1" pin="1"/>
+</segment>
+<segment>
 <pinref part="DMS" gate="-2" pin="KL"/>
 <wire x1="53.34" y1="90.17" x2="53.34" y2="85.09" width="0.1524" layer="91"/>
 <label x="53.34" y="85.09" size="1.778" layer="95" rot="R270" xref="yes"/>
@@ -20611,17 +20616,12 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 <pinref part="TELE_CON" gate="G$1" pin="7"/>
 <label x="-53.594" y="137.16" size="1.016" layer="95" rot="R270" xref="yes"/>
 </segment>
-<segment>
-<wire x1="-17.78" y1="152.4" x2="-17.78" y2="144.78" width="0.1524" layer="91"/>
-<label x="-17.78" y="144.78" size="1.016" layer="95" rot="R270" xref="yes"/>
-<pinref part="MOTOR_CON" gate="G$1" pin="2"/>
-</segment>
 </net>
 <net name="VCC_5V" class="0">
 <segment>
-<wire x1="-97.536" y1="87.63" x2="-97.536" y2="82.55" width="0.1524" layer="91"/>
-<label x="-97.536" y="82.55" size="1.016" layer="95" rot="R270" xref="yes"/>
-<pinref part="X7" gate="G$1" pin="3"/>
+<wire x1="-94.996" y1="87.63" x2="-94.996" y2="82.55" width="0.1524" layer="91"/>
+<label x="-94.996" y="82.55" size="1.016" layer="95" rot="R270" xref="yes"/>
+<pinref part="X7" gate="G$1" pin="4"/>
 </segment>
 </net>
 </nets>
@@ -20740,20 +20740,6 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 </net>
 <net name="BLACK_GND" class="0">
 <segment>
-<pinref part="GND2" gate="1" pin="GND"/>
-<pinref part="R2" gate="G$1" pin="1"/>
-<wire x1="208.28" y1="53.34" x2="208.28" y2="57.15" width="0.1524" layer="91"/>
-<label x="208.28" y="30.48" size="1.778" layer="95" rot="R90"/>
-</segment>
-<segment>
-<pinref part="GND4" gate="1" pin="GND"/>
-<wire x1="140.462" y1="55.118" x2="140.462" y2="58.42" width="0.1524" layer="91"/>
-<pinref part="IC2" gate="G$1" pin="7"/>
-<wire x1="133.096" y1="63.5" x2="133.096" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="133.096" y1="58.42" x2="140.462" y2="58.42" width="0.1524" layer="91"/>
-<label x="139.7" y="60.96" size="1.778" layer="95" rot="R90"/>
-</segment>
-<segment>
 <pinref part="IC1" gate="A1" pin="GND"/>
 <wire x1="46.99" y1="66.04" x2="46.99" y2="54.61" width="0.1524" layer="91"/>
 <label x="46.99" y="55.88" size="1.778" layer="95" rot="R90"/>
@@ -20766,6 +20752,20 @@ Es handelt sich hierbei um AK500 in horizontaler Ausführung.&lt;p&gt;
 <pinref part="C2" gate="G$1" pin="-"/>
 <wire x1="46.99" y1="54.61" x2="64.77" y2="54.61" width="0.1524" layer="91"/>
 <wire x1="64.77" y1="54.61" x2="64.77" y2="59.69" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="GND4" gate="1" pin="GND"/>
+<wire x1="140.462" y1="55.118" x2="140.462" y2="58.42" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="G$1" pin="7"/>
+<wire x1="133.096" y1="63.5" x2="133.096" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="133.096" y1="58.42" x2="140.462" y2="58.42" width="0.1524" layer="91"/>
+<label x="137.16" y="58.42" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="GND2" gate="1" pin="GND"/>
+<pinref part="R2" gate="G$1" pin="1"/>
+<wire x1="208.28" y1="53.34" x2="208.28" y2="57.15" width="0.1524" layer="91"/>
+<label x="208.28" y="55.88" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
