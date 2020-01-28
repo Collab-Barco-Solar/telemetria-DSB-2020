@@ -1,0 +1,5 @@
+- LEMBRAR DE FAZER TABELA DE RENDIMENTOS DO MOTOR E BUSCAR  MAXIMO RENDIMENTO TEÓRICO;
+- Jogar a funcao de desenhar numeros grandes numa biblioteca;
+- Descobrir a expressao que descreve carga na bateria em funcao da tensao;
+- Criar nocao de tempo para o controlador por biblioteca;
+

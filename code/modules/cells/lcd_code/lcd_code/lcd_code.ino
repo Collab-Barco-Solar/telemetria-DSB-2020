@@ -3,9 +3,9 @@
 #include <SPI.h>
 #include <LoRa.h>
 #include <Wire.h>
-//#include <TinyGPS++.h>
-//#include <HardwareSerial.h>
-//#include <Adafruit_ADS1015.h>
+#include <TinyGPS++.h>
+#include <HardwareSerial.h>
+#include <Adafruit_ADS1015.h>
 #include <LiquidCrystal_I2C.h>
 
 // set the LCD number of columns and rows
