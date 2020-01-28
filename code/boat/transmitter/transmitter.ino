@@ -71,6 +71,8 @@ char buf[20];
   #define SF      7     // Operating LoRa Spread Factor
   #define BAND  125E3   // Operating LoRa Bandwidth
   #define TXPOWER 20    // Operating LoRa Transmition Power
+  #define CODINGRATE    // LoRa Coding Rate (between 4 and 8)
+  #define 0x17          // LoRa Sync Word (default is 0x12)
   #define BAUD 2000000  // BAUD serial rate
 
 
@@ -671,6 +673,8 @@ void setup() {
   LoRa.setSignalBandwidth(BAND);
   LoRa.setTxPower(TXPOWER);
   LoRa.enableCrc();
+  LoRa.setCodingRate4(CODINGRATE);
+  LoRa.setSyncWord(SYNCWORD);
 
   
   //LoRa.onReceive(cbk);
@@ -774,4 +778,3 @@ void loop() {
 
   delay(10);
 }
-
