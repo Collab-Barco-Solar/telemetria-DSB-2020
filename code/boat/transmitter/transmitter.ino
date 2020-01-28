@@ -71,6 +71,8 @@ char buf[20];
   #define SF      7     // Operating LoRa Spread Factor
   #define BAND  125E3   // Operating LoRa Bandwidth
   #define TXPOWER 20    // Operating LoRa Transmition Power
+  #define CODINGRATE    // LoRa Coding Rate (between 4 and 8)
+  #define 0x17          // LoRa Sync Word (default is 0x12)
   #define BAUD 2000000  // BAUD serial rate
 
 
@@ -88,15 +90,15 @@ char buf[20];
 
 //Objects
 
-String rssi = "RSSI --";
-String packSize = "--";
-String packet;
+  String rssi = "RSSI --";
+  String packSize = "--";
+  String packet;
 
-TinyGPSPlus gps;      // GPS object
-HardwareSerial ss(2); // Hardware Serial comunication object
+  TinyGPSPlus gps;      // GPS object
+  HardwareSerial ss(2); // Hardware Serial comunication object
 
-Adafruit_ADS1115 ads_motor(MOTOR);
-Adafruit_ADS1115 ads_battery(BATTERY);
+  Adafruit_ADS1115 ads_motor(MOTOR);
+  Adafruit_ADS1115 ads_battery(BATTERY);
 
   //   Cheatsheet                                                     ADS1115
   //                                                                  -------
@@ -107,7 +109,8 @@ Adafruit_ADS1115 ads_battery(BATTERY);
   // ads.setGain(GAIN_EIGHT);      // 8x gain   +/- 0.512V  1 bit =   0.015625mV
   // ads.setGain(GAIN_SIXTEEN);    // 16x gain  +/- 0.256V  1 bit =   0.0078125mV
 
-
+// Variables
+  double boat_speed;
 
 //functions
 
@@ -660,6 +663,9 @@ void setup() {
   LoRa.setSignalBandwidth(BAND);
   LoRa.setTxPower(TXPOWER);
   LoRa.enableCrc();
+  LoRa.setCodingRate4(CODINGRATE);
+  LoRa.setSyncWord(SYNCWORD);
+
   //LoRa.onReceive(cbk);
   //  LoRa.receive();
   Serial.println("Initialization: ok");
@@ -675,89 +681,75 @@ void loop() {
     gps.encode(ss.read());
     
     LoRa.beginPacket();
-    // Write GPS Latitude
-
-    LoRa.print("GPS.LAT: "); 
+    // Write GPS Latitude 
     LoRa.print(LatitudeGPS());
     LoRa.print(CSV_Separator());
     // Write GPS Longitude
-    LoRa.print("GPS.LONG: "); 
     LoRa.print(LongitudeGPS());
     LoRa.print(CSV_Separator());
-  //Measures     
-    //Write DMS reading
-    LoRa.print("DMS: ");
-    Serial.print("DMS: ");
-    Serial.println(DmsRead());
-    LoRa.print(DmsRead());
+    // Write GPS speed
+    boat_speed = gps.speed.knots();
+    LoRa.print(boat_speed);
     LoRa.print(CSV_Separator());
-    //Write reverse button (ré)
-    LoRa.print("REV: ");
-    LoRa.print(ButtonReverseRead()); //For all the buttons -> "true" means closed and "false" means open
-    LoRa.print(CSV_Separator());
-    //Write motor button state (on/off)
-    LoRa.print("MOTOR: ");
-    LoRa.print(ButtonMotorRead()); //For all the buttons -> "true" means closed and "false" means open
-    LoRa.print(CSV_Separator());
-    //Write cruise button state
-    LoRa.print("Crui: ");
-    LoRa.print(ButtonCruiseRead()); //For all the buttons -> "true" means closed and "false" means open
-    LoRa.print(CSV_Separator());
-    // Write Current input on the battery bank  (using the ADS1115)
-    LoRa.print("Bat.C: ");
-    LoRa.print(BatteryCurrentRead());
-    LoRa.print(CSV_Separator());
-    // Write the potentiometer state that controls the motor 
-    LoRa.print("Pot: ");
-    Serial.print("Pot: ");
-    Serial.println(PotentiometerRead());
-    LoRa.print(PotentiometerRead());
-    LoRa.print(CSV_Separator());
-    // Write Solar Modules voltage
-    LoRa.print("Mod: ");  
-    LoRa.print(PhotovoltaicModulesRead());
-    LoRa.print(CSV_Separator());
-    // Write Auxiliary Battery voltage 
-    LoRa.print("Bat.A: ");   
-    LoRa.print(AuxiliaryBatteryRead());
-    LoRa.print(CSV_Separator());
-    // Write Auxiliary Battery current (using acs712) 
-    LoRa.print("Bat.A.C.: "); 
-    LoRa.print(AuxiliaryBatteryCurrentRead());
-    LoRa.print(CSV_Separator());
-    // Write Battery Bank voltage 
-    LoRa.print("Bat.B.: ");  
-    LoRa.print(BatteryBankRead());
-    LoRa.print(CSV_Separator());
-    //Write left cooler tension
-    LoRa.print("CB: ");  
-    LoRa.print(CoolerLeftRead());
-    LoRa.print(CSV_Separator());
-    //Write right cooler tension
-    LoRa.print("CE: ");  
-    LoRa.print(CoolerRightRead());
-    LoRa.print(CSV_Separator());
-    // Write left pump state
-    LoRa.print("PB: ");  
-    LoRa.print(LeftPumpRead());
-    LoRa.print(CSV_Separator());
-    // Write right pump state
-    LoRa.print("PE: ");  
-    LoRa.print(RightPumpRead());
-    LoRa.print(CSV_Separator());
+  //Measures 
+    
+  //Write DMS reading
+  Serial.print("DMS: ");
+  Serial.println(DmsRead());
+  LoRa.print(DmsRead());
+  LoRa.print(CSV_Separator());
+  //Write reverse button
+  LoRa.print(ButtonReverseRead()); //For all the buttons -> "true" means closed and "false" means open
+  LoRa.print(CSV_Separator());
+  //Write motor button state (on/off)
+  LoRa.print(ButtonMotorRead()); //For all the buttons -> "true" means closed and "false" means open
+  LoRa.print(CSV_Separator());
+  //Write cruise button state
+  LoRa.print(ButtonCruiseRead()); //For all the buttons -> "true" means closed and "false" means open
+  LoRa.print(CSV_Separator());
+  // Write Current input on the battery bank  (using the ADS1115)
+  LoRa.print(BatteryCurrentRead());
+  LoRa.print(CSV_Separator());
+  // Write the potentiometer state that controls the motor 
+  Serial.print("Pot: ");
+  Serial.println(PotentiometerRead());
+  LoRa.print(PotentiometerRead());
+  LoRa.print(CSV_Separator());
+  // Write Solar Modules voltage
+  LoRa.print(PhotovoltaicModulesRead());
+  LoRa.print(CSV_Separator());
+  // Write Auxiliary Battery voltage 
+  LoRa.print(AuxiliaryBatteryRead());
+  LoRa.print(CSV_Separator());
+  // Write Auxiliary Battery current (using acs712) 
+  LoRa.print(AuxiliaryBatteryCurrentRead());
+  LoRa.print(CSV_Separator());
+  // Write Battery Bank voltage 
+  LoRa.print(BatteryBankRead());
+  LoRa.print(CSV_Separator());
+  //Write left cooler tension
+  LoRa.print(CoolerLeftRead());
+  LoRa.print(CSV_Separator());
+  //Write right cooler tension
+  LoRa.print(CoolerRightRead());
+  LoRa.print(CSV_Separator());
+  // Write left pump state
+  LoRa.print(LeftPumpRead());
+  LoRa.print(CSV_Separator());
+  // Write right pump state
+  LoRa.print(RightPumpRead());
+  LoRa.print(CSV_Separator());
 
-    // Write Motor Current reading (motor current)
-    LoRa.print("MC: ");
-    LoRa.print(MotorCurrentRead());
-    LoRa.print(CSV_Separator());
-    // Write Battery CurrentIn (using the ADS1115)
-    //LoRa.print("Bat.BC: ");
-    //LoRa.print(BatteryCurrentRead());
-    //LoRa.print(CSV_Separator());
-      
-    //LoRa.print(counter);
+  // Write Motor Current reading (motor current)
+  LoRa.print(MotorCurrentRead());
+  LoRa.print(CSV_Separator());
+  // Write Battery CurrentIn (using the ADS1115)
+  //LoRa.print("Bat.BC: ");
+  //LoRa.print(BatteryCurrentRead());
+  //LoRa.print(CSV_Separator());
+    
+  //LoRa.print(counter);
   LoRa.endPacket();
 
   delay(10);
 }
-
