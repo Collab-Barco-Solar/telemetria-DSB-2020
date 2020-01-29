@@ -65,14 +65,14 @@ char buf[20];
   #define PIN_MOTOR 22
 
 
-//Other defines
+// Other defines
 
   #define FREQ  915E6   // Operating LoRa frequency
   #define SF      7     // Operating LoRa Spread Factor
   #define BAND  125E3   // Operating LoRa Bandwidth
   #define TXPOWER 20    // Operating LoRa Transmition Power
-  #define CODINGRATE    // LoRa Coding Rate (between 4 and 8)
-  #define 0x17          // LoRa Sync Word (default is 0x12)
+  #define CODINGRATE 8   // LoRa Coding Rate (between 4 and 8)
+  #define SYNCWORD 0x17          // LoRa Sync Word (default is 0x12)
   #define BAUD 2000000  // BAUD serial rate
 
 
@@ -80,7 +80,7 @@ char buf[20];
   #define BATTERY  0x49  // Address of the ADC on the solar panel modules
 
 
-//Conversion Ratios (Voltage Divider)
+// Conversion Ratios (Voltage Divider)
 
   const float DT1_RATIO = 19.333333333f; // atualizar com valores medidos dos resistores
   const float DT2_RATIO = 4.970588235f; // atualizar com valores medidos dos resistores
@@ -88,7 +88,7 @@ char buf[20];
   const float DT4_RATIO = 1.564102564f; // atualizar com valores medidos de resistores
   const float DT5_RATIO = 1.552971576f; // VOLTAGE DIVIDER FOR POTENTIOMETER
 
-//Objects
+// Objects
 
   String rssi = "RSSI --";
   String packSize = "--";
@@ -112,7 +112,7 @@ char buf[20];
 // Variables
   double boat_speed;
 
-//functions
+// functions
 
   // Coisas do LCD
     float screenDuration;
@@ -154,7 +154,7 @@ char buf[20];
             B00000,
             B00000
         };
-
+    LiquidCrystal_I2C lcd(0x27, 20, 4);  
     // Cria numeros grandes
       void num0(int i)
       {
@@ -396,10 +396,21 @@ char buf[20];
         lcd.write(0);
         lcd.setCursor(i+2,3);
         lcd.write(0);
-      }
-
-    LiquidCrystal_I2C lcd(0x27, 20, 4);  
+      }   
     
+    // TELAS LCD
+    void mainScreen(float velocity, float powMotor, float powBatOut, float powPV, int batStatus)
+    {
+
+    }
+    void potScreen(float potValue)
+    {
+
+    }
+    void lowBatScreen(float velocity, float powMotor, float powBatOut, float powPV, int batStatus)
+    {
+
+    }
     // implementando lcd para teste:
       void potentiomenterScreen(char* buffer)
       {
@@ -410,7 +421,7 @@ char buf[20];
         lcd.setCursor(0,3);
         lcd.print("SOLARES-POENTE 2019");
       }
-
+    /*
     void screenTimer(float screenStartTimer)
     {
       float screenEndTimer = milis();
@@ -419,7 +430,7 @@ char buf[20];
         temporaryScreen = false;
       }
     }
-     /
+    
     void potHistoryManager(float potActual)
     {
       if(potBufferCounter < length(potHistory))
@@ -484,7 +495,7 @@ char buf[20];
     float PotentiometerRead(){
       SetMuxChannel(PotMux);
       float readVoltage = (polyfit(analogRead(MUX_SIG))*3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
-      potHistoryManager(readVoltage);
+      //potHistoryManager(readVoltage);
       sprintf(buf, "%.1f", (readVoltage*DT5_RATIO* 2));
       potentiomenterScreen(buf);
       return readVoltage * DT5_RATIO * 2; //Multiply by the ratio of the voltage divider to find the true voltage value
@@ -682,6 +693,10 @@ void loop() {
     
     LoRa.beginPacket();
     // Write GPS Latitude 
+    /*
+    Serial.print("GPS LATITUDE: ");
+    Serial.println(LatitudeGPS());
+    */
     LoRa.print(LatitudeGPS());
     LoRa.print(CSV_Separator());
     // Write GPS Longitude
@@ -691,11 +706,17 @@ void loop() {
     boat_speed = gps.speed.knots();
     LoRa.print(boat_speed);
     LoRa.print(CSV_Separator());
+    /*
+    Serial.print("BOAT SPEED: ");
+    Serial.println(boat_speed);
+    */
   //Measures 
     
   //Write DMS reading
+  /*
   Serial.print("DMS: ");
   Serial.println(DmsRead());
+  */
   LoRa.print(DmsRead());
   LoRa.print(CSV_Separator());
   //Write reverse button
@@ -711,8 +732,10 @@ void loop() {
   LoRa.print(BatteryCurrentRead());
   LoRa.print(CSV_Separator());
   // Write the potentiometer state that controls the motor 
+  /*
   Serial.print("Pot: ");
   Serial.println(PotentiometerRead());
+  */
   LoRa.print(PotentiometerRead());
   LoRa.print(CSV_Separator());
   // Write Solar Modules voltage

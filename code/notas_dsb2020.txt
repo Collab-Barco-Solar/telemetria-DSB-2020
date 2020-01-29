@@ -3,3 +3,8 @@
 - Descobrir a expressao que descreve carga na bateria em funcao da tensao;
 - Criar nocao de tempo para o controlador por biblioteca;
 
+Conector medicoes caixa de circuitos:
+
+- Bat aux - amarelo.
+- Bat banco - laranja
+- PV in - vermelho
