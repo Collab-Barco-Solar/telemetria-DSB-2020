@@ -90,15 +90,15 @@ char buf[20];
 
 //Objects
 
-String rssi = "RSSI --";
-String packSize = "--";
-String packet;
+  String rssi = "RSSI --";
+  String packSize = "--";
+  String packet;
 
-TinyGPSPlus gps;      // GPS object
-HardwareSerial ss(2); // Hardware Serial comunication object
+  TinyGPSPlus gps;      // GPS object
+  HardwareSerial ss(2); // Hardware Serial comunication object
 
-Adafruit_ADS1115 ads_motor(MOTOR);
-Adafruit_ADS1115 ads_battery(BATTERY);
+  Adafruit_ADS1115 ads_motor(MOTOR);
+  Adafruit_ADS1115 ads_battery(BATTERY);
 
   //   Cheatsheet                                                     ADS1115
   //                                                                  -------
@@ -109,12 +109,17 @@ Adafruit_ADS1115 ads_battery(BATTERY);
   // ads.setGain(GAIN_EIGHT);      // 8x gain   +/- 0.512V  1 bit =   0.015625mV
   // ads.setGain(GAIN_SIXTEEN);    // 16x gain  +/- 0.256V  1 bit =   0.0078125mV
 
-
+// Variables
+  double boat_speed;
 
 //functions
 
   // Coisas do LCD
     float screenDuration;
+    //ActualScreen = 0 (tela principal - Velocidade grande e powers)
+    //ActualScreen = 1 (Tela Potenciometro)
+    //ActualScreen = 2 (Low Battery screen)
+    //    ||       = 3 (Low Efficiency status)
     byte ActualScreen;
     bool temporaryScreen;
     // necessario para caracteres grandes no LCD
@@ -395,7 +400,7 @@ Adafruit_ADS1115 ads_battery(BATTERY);
 
     LiquidCrystal_I2C lcd(0x27, 20, 4);  
     
-      // implementando lcd para teste:
+    // implementando lcd para teste:
       void potentiomenterScreen(char* buffer)
       {
         lcd.setCursor(0, 0);
@@ -406,7 +411,7 @@ Adafruit_ADS1115 ads_battery(BATTERY);
         lcd.print("SOLARES-POENTE 2019");
       }
 
-    screenTimer(float screenStartTimer)
+    void screenTimer(float screenStartTimer)
     {
       float screenEndTimer = milis();
       if(screenDuration >= (screenEndTimer-screenStartTimer))
@@ -414,7 +419,29 @@ Adafruit_ADS1115 ads_battery(BATTERY);
         temporaryScreen = false;
       }
     }
-
+     /
+    void potHistoryManager(float potActual)
+    {
+      if(potBufferCounter < length(potHistory))
+      {
+        potHistory[potBufferCounter] = potActual;
+      }
+      else
+      {
+        potBufferCounter = 1;
+        potHistory[potBufferCounter] = potActual;
+        PotCircled = true;
+      }
+      sumPots = 0;
+      for(runner = 1; runner < ((PotCircled == true)?length(potHistory):potBufferCounter)
+      {
+        sumPots = sumPots +  potHistory[runner];
+      }
+      //implementar biblioteca agricio com delay apropriado para exibição de Telas
+      // criar variável average
+      // Parece necessário realizar a operação de divisão, apenas enquanto potCircled por false.
+    }
+    */
   //Multiplexed Measures
     float polyfit(float value)
     {
@@ -441,85 +468,51 @@ Adafruit_ADS1115 ads_battery(BATTERY);
     double LongitudeGPS( ){      
       return gps.location.lng();
     }
-
     char CSV_Separator(){
       return (' ; ');
     }
-
     float MotorCurrentRead(){
       ads_motor.setGain(GAIN_SIXTEEN);    // 16x gain  +/- 0.256V  1 bit =   0.0078125mV
       
       return ads_motor.readADC_Differential_0_1();
     }
-
     float BatteryCurrentRead(){
       ads_battery.setGain(GAIN_ONE);        // 1x gain   +/- 4.096V  1 bit =   0.125mV
       
       return ads_battery.readADC_Differential_0_1();
     }
-
     float PotentiometerRead(){
       SetMuxChannel(PotMux);
       float readVoltage = (polyfit(analogRead(MUX_SIG))*3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
-      //potHistoryManager(readVoltage);
+      potHistoryManager(readVoltage);
       sprintf(buf, "%.1f", (readVoltage*DT5_RATIO* 2));
       potentiomenterScreen(buf);
       return readVoltage * DT5_RATIO * 2; //Multiply by the ratio of the voltage divider to find the true voltage value
     }
-
-    /*
-    potHistoryManager(float potActual)
-    {
-      if(potBufferCounter < length(potHistory))
-      {
-        potHistory[potBufferCounter] = potActual;
-      }
-      else
-      {
-        potBufferCounter = 1;
-        potHistory[potBufferCounter] = potActual;
-        PotCircled = true;
-      }
-      sumPots = 0;
-      for(runner = 1; runner < ((PotCircled == true)?length(potHistory):potBufferCounter)
-      {
-        sumPots = sumPots +  potHistory[runner];
-      }
-      //implementar biblioteca agricio com delay apropriado para exibição de Telas
-      // criar variável average
-      // Parece necessário realizar a operação de divisão, apenas enquanto potCircled por false.
-
-    }
-    */
     boolean DmsRead(){
       SetMuxChannel(DMSMux);; 
       return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed and dms on
     }
-
     boolean ButtonReverseRead(){
       SetMuxChannel(ReverseMux);
       
       return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
     }
-
     boolean ButtonMotorRead(){
       SetMuxChannel(OnOffMux);
       
       return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
     }
-
     boolean ButtonCruiseRead(){
       SetMuxChannel(CruiseMux);
       return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
     }
-
     float CoolerLeftRead(){
       SetMuxChannel(CBMux);
       float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
       
       return readVoltage * DT2_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
     }
-
     float CoolerRightRead(){
       SetMuxChannel(CEMux);
       float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
@@ -538,96 +531,93 @@ Adafruit_ADS1115 ads_battery(BATTERY);
       
       return readVoltage * DT4_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
     }
-
     float PhotovoltaicModulesRead(){
       SetMuxChannel(PhotoMux);
       float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
       
       return readVoltage * DT3_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
     }
-
     float BatteryBankRead(){
       SetMuxChannel(BatBankMux);
       float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
       
       return readVoltage * DT1_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
     }
-
     boolean LeftPumpRead(){
       SetMuxChannel(BBMux);
       
       return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
     }
-
     boolean RightPumpRead(){
       SetMuxChannel(BEMux);
         
       return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
     }
 
-    /
-    int DisplayBatteryStatus(){ //dispor a porcentagem da bateria no lcd
-      int a, b, c, status=BatteryVoltageRead()/(48)*100; //trocar o nome da função, que, na verdade, já existe
-      //aproximar o valor (?) - CONFERIR!
-      // interessante criar funcao que faca a separacao de algarismos
-      a=status/100;
-      if(a==1)
-      {
-        num1(0);
-        num0(3);
-        num0(7);
-      }
-      else{
-        a=0;
-        b=status/10;
-        c=status%10;
-        switch (b){
-          case 1:
-            num1(4);
-            break;
-          case 2:
-            num2(3);
-          case 3:
-            num3(3);
-          case 4:
-            num4(3);
-          case 5:
-            num5(3);
-          case 6:
-            num6(3);
-          case 7:
-            num7(3);
-          case 8:
-            num8(3);
-          case 9:
-            num9(3);
+    /*Battery status screen - Begin
+      int DisplayBatteryStatus(){ //dispor a porcentagem da bateria no lcd
+        int a, b, c, status=BatteryVoltageRead()/(48)*100; //trocar o nome da função, que, na verdade, já existe
+        //aproximar o valor (?) - CONFERIR!
+        // interessante criar funcao que faca a separacao de algarismos
+        a=status/100;
+        if(a==1)
+        {
+          num1(0);
+          num0(3);
+          num0(7);
         }
-        switch (c){
-          case 0:
-            num0(7);
-            break;
-          case 1:
-            num1(8);
-            break;
-          case 2:
-            num2(7);
-          case 3:
-            num3(7);
-          case 4:
-            num4(7);
-          case 5:
-            num5(7);
-          case 6:
-            num6(7);
-          case 7:
-            num7(7);
-          case 8:
-            num8(7);
-          case 9:
-            num9(7);
+        else{
+          a=0;
+          b=status/10;
+          c=status%10;
+          switch (b){
+            case 1:
+              num1(4);
+              break;
+            case 2:
+              num2(3);
+            case 3:
+              num3(3);
+            case 4:
+              num4(3);
+            case 5:
+              num5(3);
+            case 6:
+              num6(3);
+            case 7:
+              num7(3);
+            case 8:
+              num8(3);
+            case 9:
+              num9(3);
+          }
+          switch (c){
+            case 0:
+              num0(7);
+              break;
+            case 1:
+              num1(8);
+              break;
+            case 2:
+              num2(7);
+            case 3:
+              num3(7);
+            case 4:
+              num4(7);
+            case 5:
+              num5(7);
+            case 6:
+              num6(7);
+            case 7:
+              num7(7);
+            case 8:
+              num8(7);
+            case 9:
+              num9(7);
+          }
         }
       }
-    }
+    */
 
 //setup
 void setup() {
@@ -676,7 +666,6 @@ void setup() {
   LoRa.setCodingRate4(CODINGRATE);
   LoRa.setSyncWord(SYNCWORD);
 
-  
   //LoRa.onReceive(cbk);
   //  LoRa.receive();
   Serial.println("Initialization: ok");
@@ -699,7 +688,7 @@ void loop() {
     LoRa.print(LongitudeGPS());
     LoRa.print(CSV_Separator());
     // Write GPS speed
-    double boat_speed = gps.speed.knots();
+    boat_speed = gps.speed.knots();
     LoRa.print(boat_speed);
     LoRa.print(CSV_Separator());
   //Measures 
