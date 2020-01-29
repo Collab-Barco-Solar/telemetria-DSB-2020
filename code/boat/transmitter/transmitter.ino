@@ -664,16 +664,7 @@ void setup() {
   Serial.println("Boat sender");
   
   SPI.begin(SCK,MISO,MOSI,SS); // LoRa SPI communication
-  LoRa.setPins(SS,RST,DI0);
-  
-  if (!LoRa.begin(FREQ)) {
-    Serial.println("Starting LoRa failed!");
-    while (1);
-  }
-  LoRa.setSpreadingFactor(SF);
-  LoRa.setSignalBandwidth(BAND);
-  LoRa.setTxPower(TXPOWER);
-  LoRa.enableCrc();
+  LoRa.setPins(SS,RST,DI0);d
   LoRa.setCodingRate4(CODINGRATE);
   LoRa.setSyncWord(SYNCWORD);
 
@@ -690,13 +681,8 @@ void loop() {
   
   // Update GPS
     gps.encode(ss.read());
-    
     LoRa.beginPacket();
     // Write GPS Latitude 
-    /*
-    Serial.print("GPS LATITUDE: ");
-    Serial.println(LatitudeGPS());
-    */
     LoRa.print(LatitudeGPS());
     LoRa.print(CSV_Separator());
     // Write GPS Longitude
@@ -706,17 +692,10 @@ void loop() {
     boat_speed = gps.speed.knots();
     LoRa.print(boat_speed);
     LoRa.print(CSV_Separator());
-    /*
-    Serial.print("BOAT SPEED: ");
-    Serial.println(boat_speed);
-    */
+
   //Measures 
     
   //Write DMS reading
-  /*
-  Serial.print("DMS: ");
-  Serial.println(DmsRead());
-  */
   LoRa.print(DmsRead());
   LoRa.print(CSV_Separator());
   //Write reverse button
@@ -732,10 +711,6 @@ void loop() {
   LoRa.print(BatteryCurrentRead());
   LoRa.print(CSV_Separator());
   // Write the potentiometer state that controls the motor 
-  /*
-  Serial.print("Pot: ");
-  Serial.println(PotentiometerRead());
-  */
   LoRa.print(PotentiometerRead());
   LoRa.print(CSV_Separator());
   // Write Solar Modules voltage
@@ -762,15 +737,13 @@ void loop() {
   // Write right pump state
   LoRa.print(RightPumpRead());
   LoRa.print(CSV_Separator());
-
   // Write Motor Current reading (motor current)
   LoRa.print(MotorCurrentRead());
   LoRa.print(CSV_Separator());
   // Write Battery CurrentIn (using the ADS1115)
   //LoRa.print("Bat.BC: ");
   //LoRa.print(BatteryCurrentRead());
-  //LoRa.print(CSV_Separator());
-    
+  //LoRa.print(CSV_Separator());    
   //LoRa.print(counter);
   LoRa.endPacket();
 
