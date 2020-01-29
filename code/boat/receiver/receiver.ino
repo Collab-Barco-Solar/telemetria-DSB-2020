@@ -10,6 +10,7 @@
 #define DI0     26    // GPIO26 -- SX1278's IRQ(Interrupt Request)
 #define FREQ  915E6   // Operating LoRa frequency
 #define SF      7     // Operating LoRa Spread Factor
+#define SYNCWORD 0x17 // LoRa Sync Word (default is 0x12)
 #define BAND  125E3   // Operating LoRa Bandwidth
 #define BAUD 2000000  // BAUD serial rate
 
@@ -34,7 +35,8 @@ void setup() {
   Serial.println();
   Serial.println("LoRa Receiver Callback");
   SPI.begin(SCK,MISO,MOSI,SS);
-  LoRa.setPins(SS,RST,DI0);  
+  LoRa.setPins(SS,RST,DI0);
+  LoRa.setSyncWord(SYNCWORD);  
   if (!LoRa.begin(FREQ)) {
     Serial.println("Starting LoRa failed!");
     while (1);
@@ -48,7 +50,9 @@ void setup() {
   LoRa.receive();
   Serial.println("init ok");
 
-  delay(1000);
+  delay(500);
+
+  Serial.print("Latitude; Longitude ; Speed(knots); DMS ; Reverse ; Motor ; Cruise ; Battery Current ; Potentiometer ; PV Modules ; Aux Battery ; Main Battery ; LC ; RC ; Left Pump ; Right Pump ; Motor Current");
   
 }
 
@@ -59,7 +63,7 @@ void loop() {
   if (packetSize) { 
     cbk(packetSize);
     
-    Serial.println(  );
+    //Serial.println(  );
   }
 
   delay(10);
