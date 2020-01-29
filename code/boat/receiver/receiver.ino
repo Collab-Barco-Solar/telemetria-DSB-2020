@@ -10,7 +10,7 @@
 #define DI0     26    // GPIO26 -- SX1278's IRQ(Interrupt Request)
 #define FREQ  915E6   // Operating LoRa frequency
 #define SF      7     // Operating LoRa Spread Factor
-#define SYNCWORD 0x17 // LoRa Sync Word (default is 0x12)
+#define SYNCWORD 0x2D // LoRa Sync Word (default is 0x12)
 #define BAND  125E3   // Operating LoRa Bandwidth
 #define BAUD 2000000  // BAUD serial rate
 
