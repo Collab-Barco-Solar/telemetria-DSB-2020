@@ -71,8 +71,8 @@ char buf[20];
   #define SF      7     // Operating LoRa Spread Factor
   #define BAND  125E3   // Operating LoRa Bandwidth
   #define TXPOWER 20    // Operating LoRa Transmition Power
-  #define CODINGRATE 8   // LoRa Coding Rate (between 4 and 8)
-  #define SYNCWORD 0x17          // LoRa Sync Word (default is 0x12)
+  #define CODINGRATE 8  // LoRa Coding Rate (between 4 and 8)
+  #define SYNCWORD 0x2D // LoRa Sync Word (default is 0x12)
   #define BAUD 2000000  // BAUD serial rate
 
 
