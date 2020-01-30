@@ -30,6 +30,11 @@
   #define S3 0
   #define MUX_SIG 4 //MUX input Pin
 
+// ACS712 defines
+  const int mVperAmp = 66;
+  const int acsVoltageOffSet = 2500; // milivolts voltage acsVoltageOffSet
+  const int acsVoltageInput = 5000; // milivolts voltage
+
 // polynomial coefficients (ADC Adjustment)
 
   const float p5 = 17.5938359490609;
@@ -50,13 +55,15 @@ char buf[20];
  int BBMux = 6;
  int BEMux = 7;
  int CEMux = 8;
- int ACS1Mux = 9;
+ int ACS1Mux = 14;
  int BatAMux = 10;
  int PhotoMux = 11;
  int BatBankMux = 12;
  int ACS2Mux = 13;
 
-  //#define PIN_ACS 33  //??
+// Other Variables
+  float current;
+
 // Not multiplexed pins
   #define PIN_BAT_AUX 13
   #define PIN_POTENCIOMETER 14
@@ -399,18 +406,18 @@ char buf[20];
       }   
     
     // TELAS LCD
-    void mainScreen(float velocity, float powMotor, float powBatOut, float powPV, int batStatus)
-    {
+      void mainScreen(float velocity, float powMotor, float powBatOut, float powPV, int batStatus)
+      {
 
-    }
-    void potScreen(float potValue)
-    {
+      }
+      void potScreen(float potValue)
+      {
 
-    }
-    void lowBatScreen(float velocity, float powMotor, float powBatOut, float powPV, int batStatus)
-    {
+      }
+      void lowBatScreen(float velocity, float powMotor, float powBatOut, float powPV, int batStatus)
+      {
 
-    }
+      }
     // implementando lcd para teste:
       void potentiomenterScreen(char* buffer)
       {
@@ -421,37 +428,36 @@ char buf[20];
         lcd.setCursor(0,3);
         lcd.print("SOLARES-POENTE 2019");
       }
-    /*
-    void screenTimer(float screenStartTimer)
-    {
-      float screenEndTimer = milis();
-      if(screenDuration >= (screenEndTimer-screenStartTimer))
+    /*void screenTimer(float screenStartTimer)
       {
-        temporaryScreen = false;
+        float screenEndTimer = milis();
+        if(screenDuration >= (screenEndTimer-screenStartTimer))
+        {
+          temporaryScreen = false;
+        }
       }
-    }
-    
-    void potHistoryManager(float potActual)
-    {
-      if(potBufferCounter < length(potHistory))
+      
+      void potHistoryManager(float potActual)
       {
-        potHistory[potBufferCounter] = potActual;
+        if(potBufferCounter < length(potHistory))
+        {
+          potHistory[potBufferCounter] = potActual;
+        }
+        else
+        {
+          potBufferCounter = 1;
+          potHistory[potBufferCounter] = potActual;
+          PotCircled = true;
+        }
+        sumPots = 0;
+        for(runner = 1; runner < ((PotCircled == true)?length(potHistory):potBufferCounter)
+        {
+          sumPots = sumPots +  potHistory[runner];
+        }
+        //implementar biblioteca agricio com delay apropriado para exibição de Telas
+        // criar variável average
+        // Parece necessário realizar a operação de divisão, apenas enquanto potCircled por false.
       }
-      else
-      {
-        potBufferCounter = 1;
-        potHistory[potBufferCounter] = potActual;
-        PotCircled = true;
-      }
-      sumPots = 0;
-      for(runner = 1; runner < ((PotCircled == true)?length(potHistory):potBufferCounter)
-      {
-        sumPots = sumPots +  potHistory[runner];
-      }
-      //implementar biblioteca agricio com delay apropriado para exibição de Telas
-      // criar variável average
-      // Parece necessário realizar a operação de divisão, apenas enquanto potCircled por false.
-    }
     */
   //Multiplexed Measures
     float polyfit(float value)
@@ -461,15 +467,12 @@ char buf[20];
         
       return fittedReading;
     }
-
-    void SetMuxChannel ( int channel ) {
-      
+    void SetMuxChannel ( int channel ) {      
       digitalWrite(S0, channel>>0&1);
       digitalWrite(S1, channel>>1&1);
       digitalWrite(S2, channel>>2&1);
       digitalWrite(S3, channel>>3&1); 
       delay(10);
-
     }
     // Getting GPS latitude
     double LatitudeGPS( ){
@@ -487,7 +490,7 @@ char buf[20];
       
       return ads_motor.readADC_Differential_0_1();
     }
-    float BatteryCurrentRead(){
+    float BatteryCurrentRead(){ // battery bank read
       ads_battery.setGain(GAIN_ONE);        // 1x gain   +/- 4.096V  1 bit =   0.125mV      
       return ads_battery.readADC_Differential_0_1();
     }
@@ -503,20 +506,25 @@ char buf[20];
       SetMuxChannel(DMSMux);; 
       return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed and dms on
     }
+    /*
     boolean ButtonReverseRead(){
       SetMuxChannel(ReverseMux);
       
       return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
     }
-    boolean ButtonMotorRead(){
+    */
+    boolean ButtonMotorRead(){ //On Off button 
       SetMuxChannel(OnOffMux);
       
       return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
     }
+    /*
     boolean ButtonCruiseRead(){
       SetMuxChannel(CruiseMux);
       return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
     }
+    */
+   /*
     float CoolerLeftRead(){
       SetMuxChannel(CBMux);
       float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
@@ -529,6 +537,7 @@ char buf[20];
       
       return readVoltage * DT2_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
     }
+    */
     float AuxiliaryBatteryRead(){
       SetMuxChannel(BatAMux);
       float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
@@ -538,8 +547,8 @@ char buf[20];
     float AuxiliaryBatteryCurrentRead(){
       SetMuxChannel(ACS1Mux);
       float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
-      
-      return readVoltage * DT4_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
+      current = acsCurrentConversion(readVoltage * DT4_RATIO);
+      return current; //Multiply by the ratio of the voltage divider to find the true voltage value
     }
     float PhotovoltaicModulesRead(){
       SetMuxChannel(PhotoMux);
@@ -562,6 +571,12 @@ char buf[20];
       SetMuxChannel(BEMux);
         
       return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
+    }
+    float acsCurrentConversion(float Vacs)
+    {
+      float MeasuredCurrent;
+      MeasuredCurrent = ((Vacs - acsVoltageOffSet) / mVperAmp);
+      return MeasuredCurrent;
     }
 
     /*Battery status screen - Begin
@@ -697,9 +712,11 @@ void loop() {
   //Write DMS reading
   LoRa.print(DmsRead());
   LoRa.print(CSV_Separator());
+  /*
   //Write reverse button
   LoRa.print(ButtonReverseRead()); //For all the buttons -> "true" means closed and "false" means open
   LoRa.print(CSV_Separator());
+  */
   //Write motor button state (on/off)
   LoRa.print(ButtonMotorRead()); //For all the buttons -> "true" means closed and "false" means open
   LoRa.print(CSV_Separator());
@@ -726,12 +743,14 @@ void loop() {
   // Write Battery Bank voltage 
   LoRa.print(BatteryBankRead());
   LoRa.print(CSV_Separator());
+  /*
   //Write left cooler tension
   LoRa.print(CoolerLeftRead());
   LoRa.print(CSV_Separator());
   //Write right cooler tension
   LoRa.print(CoolerRightRead());
   LoRa.print(CSV_Separator());
+  */
   // Write left pump state
   LoRa.print(LeftPumpRead());
   LoRa.print(CSV_Separator());
