@@ -488,8 +488,7 @@ char buf[20];
       return ads_motor.readADC_Differential_0_1();
     }
     float BatteryCurrentRead(){
-      ads_battery.setGain(GAIN_ONE);        // 1x gain   +/- 4.096V  1 bit =   0.125mV
-      
+      ads_battery.setGain(GAIN_ONE);        // 1x gain   +/- 4.096V  1 bit =   0.125mV      
       return ads_battery.readADC_Differential_0_1();
     }
     float PotentiometerRead(){
@@ -704,9 +703,11 @@ void loop() {
   //Write motor button state (on/off)
   LoRa.print(ButtonMotorRead()); //For all the buttons -> "true" means closed and "false" means open
   LoRa.print(CSV_Separator());
+  /*
   //Write cruise button state
   LoRa.print(ButtonCruiseRead()); //For all the buttons -> "true" means closed and "false" means open
   LoRa.print(CSV_Separator());
+  */
   // Write Current input on the battery bank  (using the ADS1115)
   LoRa.print(BatteryCurrentRead());
   LoRa.print(CSV_Separator());
