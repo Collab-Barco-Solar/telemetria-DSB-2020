@@ -1,4 +1,4 @@
-// bibliotecas
+ // bibliotecas
 
 #include <SPI.h>
 #include <LoRa.h>
@@ -500,6 +500,12 @@ float PotentiometerRead() {
   potentiomenterScreen(buf);
   return readVoltage * DT5_RATIO * 2; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
+float acsCurrentConversion(float Vacs)
+{
+  float MeasuredCurrent;
+  MeasuredCurrent = ((Vacs - acsVoltageOffSet) / mVperAmp);
+  return MeasuredCurrent;
+}
 boolean DmsRead() {
   SetMuxChannel(DMSMux);;
   return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed and dms on
@@ -569,12 +575,6 @@ boolean RightPumpRead() {
   SetMuxChannel(BEMux);
 
   return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
-}
-float acsCurrentConversion(float Vacs)
-{
-  float MeasuredCurrent;
-  MeasuredCurrent = ((Vacs - acsVoltageOffSet) / mVperAmp);
-  return MeasuredCurrent;
 }
 /*Battery status screen - Begin
   int DisplayBatteryStatus(){ //dispor a porcentagem da bateria no lcd
@@ -732,8 +732,11 @@ void loop() {
     LoRa.print(ButtonCruiseRead()); //For all the buttons -> "true" means closed and "false" means open
     LoRa.print(CSV_Separator());
   */
-  // Write Current input on the battery bank  (using the ADS1115)
-  LoRa.print(BatteryCurrentRead());
+  // Write Battery Bank voltage
+  LoRa.print(BatteryBankRead());
+  LoRa.print(CSV_Separator());
+  // Write Motor Current reading (motor current)
+  LoRa.print(MotorCurrentRead());
   LoRa.print(CSV_Separator());
   // Write the potentiometer state that controls the motor
   LoRa.print(PotentiometerRead());
@@ -741,14 +744,14 @@ void loop() {
   // Write Solar Modules voltage
   LoRa.print(PhotovoltaicModulesRead());
   LoRa.print(CSV_Separator());
+  // Write Current input on the battery bank  (using the ADS1115)
+  LoRa.print(BatteryCurrentRead());
+  LoRa.print(CSV_Separator());
   // Write Auxiliary Battery voltage
   LoRa.print(AuxiliaryBatteryRead());
   LoRa.print(CSV_Separator());
   // Write Auxiliary Battery current (using acs712)
   LoRa.print(AuxiliaryBatteryCurrentRead());
-  LoRa.print(CSV_Separator());
-  // Write Battery Bank voltage
-  LoRa.print(BatteryBankRead());
   LoRa.print(CSV_Separator());
   /*
     //Write left cooler tension
@@ -763,9 +766,6 @@ void loop() {
   LoRa.print(CSV_Separator());
   // Write right pump state
   LoRa.print(RightPumpRead());
-  LoRa.print(CSV_Separator());
-  // Write Motor Current reading (motor current)
-  LoRa.print(MotorCurrentRead());
   LoRa.print(CSV_Separator());
   // Write Battery CurrentIn (using the ADS1115)
   //LoRa.print("Bat.BC: ");
