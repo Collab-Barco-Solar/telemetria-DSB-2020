@@ -24,8 +24,8 @@ void cbk(int packetSize) {
   for (int i = 0; i < packetSize; i++) { packet += (char) LoRa.read(); }
   rssi = String(LoRa.packetRssi(), DEC) ;
   
-  Serial.print("Sinal RSSI: " + rssi );
-  Serial.println(" Mensagem: " + packet);
+  Serial.print( rssi );
+  Serial.println(" ; " + packet);
 }
 
 void setup() {
@@ -52,7 +52,7 @@ void setup() {
 
   delay(500);
 
-  Serial.print("Latitude; Longitude ; Speed(knots); DMS ; Reverse ; ON/OFF ;Bat Bank (V); Motor (A) ; Potentiometer ; PV Modules (V) ;  PV in (A) ; Aux Battery (V) ;Aux Bat (A) ; Left Pump ; Right Pump ;");
+  Serial.print("RSSI; Latitude; Longitude ; Speed(knots); DMS ; Reverse ; ON/OFF ;Bat Bank (V); Motor (A) ; Potentiometer ; PV Modules (V) ;  PV in (A) ; Aux Battery (V) ;Aux Bat (A) ; Left Pump ; Right Pump ");
   
 }
 

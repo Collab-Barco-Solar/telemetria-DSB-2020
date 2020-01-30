@@ -481,7 +481,7 @@ double LongitudeGPS( ) {
   return gps.location.lng();
 }
 char CSV_Separator() {
-  return (' ; ');
+  return (';');
 }
 float MotorCurrentRead() {
   ads.setGain(GAIN_SIXTEEN);    // 16x gain  +/- 0.256V  1 bit =   0.0078125mV
