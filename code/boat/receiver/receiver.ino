@@ -52,7 +52,7 @@ void setup() {
 
   delay(500);
 
-  Serial.print("Latitude; Longitude ; Speed(knots); DMS ; Reverse ; ON/OFF ;Bat Bank (V); Motor (A) ; Potentiometer ; PV Modules (V) ;  PV in (A) ; Aux Battery (V) ;Aux Bat (A) ; Left Pump ; Right Pump ;");
+  Serial.print("Latitude; Longitude ; Speed(knots); DMS ; Reverse ; ON/OFF ;Bat Bank (V); Motor (A) ; Potentiometer ; PV Modules (V) ;  PV in (A) ; Aux Battery (V) ;Aux Bat (A) ; Left Pump ; Right Pump ");
   
 }
 
