@@ -504,13 +504,13 @@ boolean DmsRead() {
   SetMuxChannel(DMSMux);;
   return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed and dms on
 }
-/*
-  boolean ButtonReverseRead(){
-  SetMuxChannel(ReverseMux);
 
-  return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
-  }
-*/
+boolean ButtonReverseRead(){
+SetMuxChannel(ReverseMux);
+
+return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
+}
+
 boolean ButtonMotorRead() { //On Off button
   SetMuxChannel(OnOffMux);
 
@@ -719,11 +719,11 @@ void loop() {
   //Write DMS reading
   LoRa.print(DmsRead());
   LoRa.print(CSV_Separator());
-  /*
-    //Write reverse button
-    LoRa.print(ButtonReverseRead()); //For all the buttons -> "true" means closed and "false" means open
-    LoRa.print(CSV_Separator());
-  */
+  
+  //Write reverse button
+  LoRa.print(ButtonReverseRead()); //For all the buttons -> "true" means closed and "false" means open
+  LoRa.print(CSV_Separator());
+  
   //Write motor button state (on/off)
   LoRa.print(ButtonMotorRead()); //For all the buttons -> "true" means closed and "false" means open
   LoRa.print(CSV_Separator());
