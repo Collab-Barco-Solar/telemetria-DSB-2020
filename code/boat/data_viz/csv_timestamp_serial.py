@@ -8,7 +8,7 @@ fieldnames = ["Latitude"," Longitude "," Speed(knots)"," DMS "," Reverse "," Mot
 ts = time.gmtime()
 print(time.strftime("%Y-%m-%d %H:%M:%S", ts))
 
-filename = time.strftime("%Y-%m-%d%H:%M:%S.csv", ts)
+filename = time.strftime("%Y-%m-%d_%H-%M-%S.csv", ts)
 
 tx1 = serial.Serial("/dev/ttyUSB0", 2000000)
 print(tx1.name)
