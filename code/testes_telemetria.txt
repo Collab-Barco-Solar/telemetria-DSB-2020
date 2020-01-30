@@ -1,0 +1,9 @@
+Notas TELEMETRIA (TESTES)
+
+* FUNCIONAMENTO DO ADS1115 (pode ter morrido)
+    - Conferir a funcao BatteryCurrentRead();
+    - MotorCurrentRead();
+
+* POTENCIOMETRO
+    - Conferir se chega 5V do motor (caso nao, ajustar valor setado em codigo);
+    

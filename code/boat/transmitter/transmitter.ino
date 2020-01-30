@@ -429,6 +429,7 @@ void potentiomenterScreen(char* buffer)
   }
   }
 
+<<<<<<< HEAD
   void potHistoryManager(float potActual)
   {
   if(potBufferCounter < length(potHistory))
@@ -537,6 +538,101 @@ float AuxiliaryBatteryRead() {
 float AuxiliaryBatteryCurrentRead() {
   SetMuxChannel(ACS1Mux);
   float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
+=======
+    }
+    // Getting GPS latitude
+    double LatitudeGPS( ){
+      return gps.location.lat();
+    }
+    // Getting GPS longitude
+    double LongitudeGPS( ){      
+      return gps.location.lng();
+    }
+    char CSV_Separator(){
+      return (' ; ');
+    }
+    float MotorCurrentRead(){
+      ads_motor.setGain(GAIN_SIXTEEN);    // 16x gain  +/- 0.256V  1 bit =   0.0078125mV
+      
+      return ads_motor.readADC_Differential_0_1();
+    }
+    float BatteryCurrentRead(){
+      ads_battery.setGain(GAIN_ONE);        // 1x gain   +/- 4.096V  1 bit =   0.125mV      
+      return ads_battery.readADC_Differential_0_1();
+    }
+    float PotentiometerRead(){
+      SetMuxChannel(PotMux);
+      float readVoltage = (polyfit(analogRead(MUX_SIG))*3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
+      //potHistoryManager(readVoltage);
+      sprintf(buf, "%.1f", (readVoltage*DT5_RATIO* 2));
+      potentiomenterScreen(buf);
+      return readVoltage * DT5_RATIO * 2; //Multiply by the ratio of the voltage divider to find the true voltage value
+    }
+    boolean DmsRead(){
+      SetMuxChannel(DMSMux);; 
+      return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed and dms on
+    }
+    boolean ButtonReverseRead(){
+      SetMuxChannel(ReverseMux);
+      
+      return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
+    }
+    boolean ButtonMotorRead(){
+      SetMuxChannel(OnOffMux);
+      
+      return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
+    }
+    boolean ButtonCruiseRead(){
+      SetMuxChannel(CruiseMux);
+      return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
+    }
+    float CoolerLeftRead(){
+      SetMuxChannel(CBMux);
+      float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
+      
+      return readVoltage * DT2_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
+    }
+    float CoolerRightRead(){
+      SetMuxChannel(CEMux);
+      float readVoltage = (analogRead(MUX_SIG) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
+      
+      return readVoltage * DT2_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
+    }
+    float AuxiliaryBatteryRead(){
+      SetMuxChannel(BatAMux);
+      float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
+      
+      return readVoltage * DT2_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
+    }
+    float AuxiliaryBatteryCurrentRead(){
+      SetMuxChannel(ACS1Mux);
+      float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
+      
+      return readVoltage * DT4_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
+    }
+    float PhotovoltaicModulesRead(){
+      SetMuxChannel(PhotoMux);
+      float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
+      
+      return readVoltage * DT3_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
+    }
+    float BatteryBankRead(){
+      SetMuxChannel(BatBankMux);
+      float readVoltage = (polyfit(analogRead(MUX_SIG)) * 3.3) / 4095;  //if analog read == 4095, it is reading 3.3V, so convert the reading from bits to Voltage
+      
+      return readVoltage * DT1_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
+    }
+    boolean LeftPumpRead(){
+      SetMuxChannel(BBMux);
+      
+      return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
+    }
+    boolean RightPumpRead(){
+      SetMuxChannel(BEMux);
+        
+      return (!(analogRead(MUX_SIG) < 300)); //If it's less than 300 bits, then consider the button as closed
+    }
+>>>>>>> fd4d9d8e72286e3b25a52959f7077cbf123736b8
 
   return readVoltage * DT4_RATIO; //Multiply by the ratio of the voltage divider to find the true voltage value
 }
@@ -660,6 +756,7 @@ void setup() {
   while (!Serial);
   Serial.println();
   Serial.println("Boat sender");
+<<<<<<< HEAD
 
   SPI.begin(SCK, MISO, MOSI, SS); // LoRa SPI communication
   LoRa.setPins(SS, RST, DI0);
@@ -672,6 +769,11 @@ void setup() {
   LoRa.setSignalBandwidth(BAND);
   LoRa.setTxPower(TXPOWER);
   LoRa.enableCrc();
+=======
+  
+  SPI.begin(SCK,MISO,MOSI,SS); // LoRa SPI communication
+  LoRa.setPins(SS,RST,DI0);d
+>>>>>>> fd4d9d8e72286e3b25a52959f7077cbf123736b8
   LoRa.setCodingRate4(CODINGRATE);
   LoRa.setSyncWord(SYNCWORD);
 
@@ -687,6 +789,7 @@ void loop() {
   // Create and send packet
 
   // Update GPS
+<<<<<<< HEAD
   gps.encode(ss.read());
 
   LoRa.beginPacket();
@@ -715,6 +818,24 @@ void loop() {
     Serial.print("DMS: ");
     Serial.println(DmsRead());
   */
+=======
+    gps.encode(ss.read());
+    LoRa.beginPacket();
+    // Write GPS Latitude 
+    LoRa.print(LatitudeGPS());
+    LoRa.print(CSV_Separator());
+    // Write GPS Longitude
+    LoRa.print(LongitudeGPS());
+    LoRa.print(CSV_Separator());
+    // Write GPS speed
+    boat_speed = gps.speed.knots();
+    LoRa.print(boat_speed);
+    LoRa.print(CSV_Separator());
+
+  //Measures 
+    
+  //Write DMS reading
+>>>>>>> fd4d9d8e72286e3b25a52959f7077cbf123736b8
   LoRa.print(DmsRead());
   LoRa.print(CSV_Separator());
   //Write reverse button
@@ -723,17 +844,23 @@ void loop() {
   //Write motor button state (on/off)
   LoRa.print(ButtonMotorRead()); //For all the buttons -> "true" means closed and "false" means open
   LoRa.print(CSV_Separator());
+  /*
   //Write cruise button state
   LoRa.print(ButtonCruiseRead()); //For all the buttons -> "true" means closed and "false" means open
   LoRa.print(CSV_Separator());
+  */
   // Write Current input on the battery bank  (using the ADS1115)
   LoRa.print(BatteryCurrentRead());
   LoRa.print(CSV_Separator());
+<<<<<<< HEAD
   // Write the potentiometer state that controls the motor
   /*
     Serial.print("Pot: ");
     Serial.println(PotentiometerRead());
   */
+=======
+  // Write the potentiometer state that controls the motor 
+>>>>>>> fd4d9d8e72286e3b25a52959f7077cbf123736b8
   LoRa.print(PotentiometerRead());
   LoRa.print(CSV_Separator());
   // Write Solar Modules voltage
@@ -760,15 +887,18 @@ void loop() {
   // Write right pump state
   LoRa.print(RightPumpRead());
   LoRa.print(CSV_Separator());
-
   // Write Motor Current reading (motor current)
   LoRa.print(MotorCurrentRead());
   LoRa.print(CSV_Separator());
   // Write Battery CurrentIn (using the ADS1115)
   //LoRa.print("Bat.BC: ");
   //LoRa.print(BatteryCurrentRead());
+<<<<<<< HEAD
   //LoRa.print(CSV_Separator());
 
+=======
+  //LoRa.print(CSV_Separator());    
+>>>>>>> fd4d9d8e72286e3b25a52959f7077cbf123736b8
   //LoRa.print(counter);
   LoRa.endPacket();
 
