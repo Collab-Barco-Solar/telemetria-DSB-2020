@@ -50,7 +50,7 @@ void setup() {
   LoRa.receive();
   Serial.println("init ok");
 
-  delay(500);
+  delay(5000);
 
   Serial.print("RSSI; Latitude; Longitude ; Speed(knots); DMS ; Reverse ; ON/OFF ;Bat Bank (V); Motor (A) ; Potentiometer ; PV Modules (V) ;  PV in (A) ; Aux Battery (V) ;Aux Bat (A) ; Left Pump ; Right Pump ");
   

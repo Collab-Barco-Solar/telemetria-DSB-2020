@@ -1,0 +1,18 @@
+1a etapa (alteração dos pinos do mux e endereços do ads)
+    - batbankmux (12 para 11)
+    - Pv in alterado de 11 para 12
+    - endereço do ads 0x4A para 0x48
+    - Botao motor de 2 para 4 - OK
+    - Potenciometro de 4 para 6 - OK
+    - BB de 6 para 7 - OK       PAREI AQUI
+    - BE de 7 para 0 - OK
+    - DMS de 0 para 1 - OK
+    - Ré de 1 para 3 - OK 
+    - Cruzeiro de 3 para 5 - DON'T CARE
+    - CBMux de 5 para 8 - Nao existe
+    - CEMux de 8 para 9 - nao existe
+
+
+2a etapa (averiguar o mux a fundo)
+    -
+    -

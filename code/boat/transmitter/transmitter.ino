@@ -46,19 +46,19 @@ const float p1 = -1.21956845031952e-11;
 char buf[20];
 // MUX input pins
 
-int DMSMux = 0;
-int ReverseMux = 1;
-int OnOffMux = 2;
-int CruiseMux = 3;
-int PotMux = 4;
-int CBMux = 5;
-int BBMux = 6;
-int BEMux = 7;
-int CEMux = 8;
-int ACS1Mux = 14;
+int DMSMux = 1;
+int ReverseMux = 3;
+int OnOffMux = 4;
+int CruiseMux = 5;
+int PotMux = 6;
+int CBMux = 8;
+int BBMux = 7;
+int BEMux = 0;
+int CEMux = 9;
 int BatAMux = 10;
-int PhotoMux = 11;
-int BatBankMux = 12;
+int BatBankMux = 11;
+int PhotoMux = 12;
+int ACS1Mux = 14;
 int ACS2Mux = 13;
 
 // Other Variables
@@ -83,7 +83,7 @@ float current;
 #define BAUD 2000000  // BAUD serial rate
 
 
-#define ADS    0x4A  // Address of the ADC measuring the motor and PV modules current
+#define ADS    0x48  // Address of the ADC measuring the motor and PV modules current
 
 // Conversion Ratios (Voltage Divider)
 
